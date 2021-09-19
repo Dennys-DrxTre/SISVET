@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  {% block tittle %}
+  {% endblock tittle %}
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="{% static 'img/delivery-2.png' %}" type="image/x-icon">
+  {% block pluginscss %}
+  {% endblock pluginscss %}
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'lib/adminlte/css/adminlte.min.css' %}">
+  <link rel="stylesheet" href="{% static 'lib/adminlte/css/styles.css' %}">
+  <!-- Jquery Confirm css -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/jquery-confirm-v3/jquery-confirm.min.css' %}">
+  <!-- Toastr js -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/toastr/toastr.min.css' %}">
+  <!-- select2 js -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css' %}">
+  <link rel="stylesheet" href="{% static 'lib/plugins/select2/css/select2.min.css' %}">
+ 
+
+</head>
+
+<body class="">
+  <!-- Site wrapper -->
+  <div class="wrapper">
+
+    {% include "header_base.html" %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+        {% block contenido %}
+        {% endblock contenido %}
+    </div>
+
+    <!-- ./wrapper -->
+
+    {% include "footer.html" %}
+  </div>
+  
+    <!-- jQuery -->
+    <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'lib/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'lib/adminlte/js/adminlte.min.js' %}"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="{% static 'lib/adminlte/js/demo.js' %}"></script>
+    <!-- Jquery Confirm js -->
+    <script src="{% static 'lib/plugins/jquery-confirm-v3/jquery-confirm.min.js' %}"></script>
+    <!-- Codigo js para las paginas -->
+    <script src="{% static 'js/codigoJS.js' %}"></script>
+    <!-- Toastr js -->
+    <script src="{% static 'lib/plugins/toastr/toastr.min.js' %}"></script>
+    <!-- select2 js -->
+    <script src="{% static 'lib/plugins/select2/js/select2.min.js' %}"></script>
+    <script src="{% static 'lib/plugins/select2/js/i18n/es.js' %}"></script>
+
+  
+    {% block pluginsjs %}
+    {% endblock pluginsjs %}
+</body>
+
+  <script>
+    {% if messages %}
+        {% for mensaje in messages %}
+          {% if mensaje.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            function mensaje(sms) {
+              toastr.error(sms)
+            }
+            mensaje('{{ mensaje }}')
+          {% else %}
+            function mensaje(sms) {
+              toastr.success(sms)
+            }
+              mensaje('{{ mensaje }}')
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+  </script>
+
+  {% block modal %}      
+  {% endblock modal %}
+</html>
+
+

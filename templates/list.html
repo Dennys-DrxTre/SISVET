@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block pluginscss %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock pluginscss %}
+
+{% block tittle %}
+<title>{{ titulo }}</title>
+{% endblock tittle %}
+
+{% block contenido %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                    <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+                    <li class="breadcrumb-item">Vehiculos</li>
+                    <li class="breadcrumb-item active">Listado</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- /.card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-list-ul"></i> {{ sub_titulo }}</h3>
+
+                        <div class="card-tools">
+                            <!-- tools en la derecha -->
+                            {% block add_element %}
+                            {% endblock add_element %}
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="data" class="table table-bordered table-striped">
+                            <thead>
+                                {% block t_body %}
+                                {% endblock t_body %}
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </div>
+</section>
+{% endblock contenido %}
+
+
+{% block pluginsjs %}
+<!-- DataTables -->
+<script src="{% static 'lib/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+{% block head_list %}
+
+{% endblock %}
+{% endblock pluginsjs %}

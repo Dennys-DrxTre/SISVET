@@ -1,0 +1,16 @@
+Pillow==8.0.1
+psycopg2==2.8.6
+pylint==2.8.2
+pycparser==2.20
+PyMySQL==0.10.0
+Pyphen==0.10.0
+pytz==2020.4
+reportlab==3.5.55
+six==1.15.0
+sqlparse==0.4.1
+tinycss2==1.1.0
+toml==0.10.2
+WeasyPrint==52.5
+webencodings==0.5.1
+wincertstore==0.2
+wrapt==1.12.1

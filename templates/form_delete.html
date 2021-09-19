@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>{{ titulo }}</title>
+{% endblock tittle %}
+
+
+{% block contenido %}
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-left">
+                    <li class="breadcrumb-item"><a href="#" class="text-success">SISVID</a>
+                    </li>
+                    <li class="breadcrumb-item"><a href="#" class="text-success">#</a></li>
+                    <li class="breadcrumb-item active">#</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger">
+                    <div class="card-header color-nav">
+                        <h3 class="card-title">#</h3>
+                        <div class="card-tools">
+                            <!-- Buttons, labels, and many other things can be placed here! -->
+                            <!-- Here is a label for example -->
+                        </div>
+                        <!-- /.card-tools -->
+                    </div>
+                    {% block form_delete %}
+                    {% endblock form_delete %}
+                </div>
+            </div>
+        </div>
+</section>
+{% endblock contenido %}

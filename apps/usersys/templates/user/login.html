@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+  {% load widget_tweaks %}
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>SISVID | Iniciar Sesión</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/fontawesome-free/css/all.min.css' %} ">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %} ">
+  <!-- Theme style -->
+  <link rel="stylesheet" href=" {% static 'lib/adminlte/css/adminlte.min.css' %} ">
+  <link rel="stylesheet" href=" {% static 'lib/adminlte/css/styles.css' %} ">
+  <link rel="stylesheet" href="{% static 'lib/plugins/toastr/toastr.min.css' %}">
+
+  <!-- Google Font: Source Sans Pro -->
+</head>
+
+<body class="hold-transition login-page login-page-color">
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="../../index2.html"><b class="titulo-login">SISVET</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body card-success">
+        <p class="login-box-msg">Iniciar Sesión</p>
+
+        <form method="POST" action="">
+          {% csrf_token %}
+
+          <div class="input-group mb-3">
+            {{ form.username|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Nombre de usuario' }}
+
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-user"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            {{ form.password|add_class:'form-control'|attr:'autocomplete:off'|attr:'placeholder:Contraseña' }}
+
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Recordarme
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <button type="submit" class="btn btn-success btn-colores btn-block">Entrar</button>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+
+  <!-- /.login-box -->
+
+  <!-- jQuery -->
+  <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>
+  <!-- Bootstrap 4 -->
+  <script src="{% static 'lib/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <!-- AdminLTE App -->
+  <script src="{% static 'lib/adminlte/js/adminlte.min.js' %}"></script>
+  <!-- Toastr -->
+  <script src="{% static 'lib/plugins/toastr/toastr.min.js' %}"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="{% static 'lib/adminlte/js/demo.js' %}"></script>
+  <!-- Codigo js para las paginas -->
+  <script src="{% static 'js/codigoJS.js' %}"></script>
+
+  {% block script %}
+    <script>
+      {% if form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+              {% for errors in field.errors %}
+                function ErrorForm(FormError) {
+                    toastr.error(FormError)
+                }
+                ErrorForm('{{ error }}')
+              {% endfor %}
+            {% endif %}
+        {% endfor %}
+        {% if form.non_field_errors%}
+          {% for error in form.non_field_errors %}
+            function ErrorForm(FormError) {
+                toastr.error(FormError)
+            }
+            ErrorForm('{{ error }}')
+          {% endfor %}
+        {% endif %}
+      {% endif %}
+    </script>
+{% endblock script %}
+
+</body>
+
+</html>
+

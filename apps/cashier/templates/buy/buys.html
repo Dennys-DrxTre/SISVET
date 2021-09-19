@@ -1,0 +1,21 @@
+{% extends "list.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head_list %}
+  <script src="{% static 'buy/list.js' %}"> </script>
+{% endblock %}
+ 
+{% block add_element %}
+<a href="{% url 'cashier:buy' %}" class="btn btn-colores"><i class="fas fa-plus-square"></i></a>
+{% endblock add_element %}
+ 
+{% block t_body %}
+    <tr>
+        <th scope="col" style="width: 5%;">id</th>
+        <th scope="col" style="width: 5%;">Proveedor</th>
+        <th scope="col" style="width: 7%;">Tipo</th>
+        <th scope="col" style="width: 11%;">Fecha</th>
+        <th scope="col" style="width: 10%;">Total</th>
+        <th scope="col" style="width: 10%;">Opciones</th>
+    </tr>
+{% endblock t_body %}

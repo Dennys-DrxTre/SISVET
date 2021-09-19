@@ -1,0 +1,257 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <link rel="shortcut icon" href="{% static 'img/delivery-2.png' %}" type="image/x-icon">
+
+
+  <title>Dashboard | Cliente</title>
+
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/fontawesome-free/css/all.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href=" {% static 'lib/adminlte/css/adminlte.min.css' %} ">
+  <link rel="stylesheet" href="{% static 'lib/adminlte/css/styles.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Jquery Confirm css -->
+  <link rel="stylesheet" href="{% static 'lib/plugins/jquery-confirm-v3/jquery-confirm.min.css' %}">
+</head>
+
+
+<body class="hold-transition layout-top-nav">
+  <div class="wrapper">
+
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-success navbar-dark color-nav">
+      <div class="container">
+        <a href="#" class="navbar-brand">
+        <img src="#" id="detail-img" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+          <span class="brand-text font-weight-light"
+            style="font-weight: 800; color: white;">{{ obj.first_name }}</span>
+        </a>
+
+        <div>
+          <span style="margin-left: 20px;"><span class="badge badge-dark mr-2" id="hora-menu"></span></span>
+        </div>
+
+
+        <!-- Right navbar links -->
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="modal" data-target="#modal-sm" href="#">
+              <i class="fas fa-sign-out-alt"></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <div class="content-header">
+        <div class="container">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="m-0 text-dark"> Dashboard </h1>
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content-header -->
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4">
+              <input type="hidden" name="action" value="searchdata" id="status">
+
+
+              <!-- Profile Image -->
+              <div class="card card-success card-outline">
+                <div class="card-body box-profile">
+                  <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" id="detail-img2"
+                      src="#" alt="User profile picture">
+                  </div>
+
+                  <h3 id="detail-name_pro" class="profile-username text-center"> {{ obj.first_name }} {{ obj.last_name }}</h3>
+
+                  <ul class="list-group list-group-unbordered mb-3">
+                    <li class="list-group-item">
+                      <b><i class="fas fa-transgender mr-1"></i> Genero </b> <a id="detail-gender"
+                        class="float-right">{{ obj.gender }}</a>
+                    </li>
+                    <li class="list-group-item">
+                      <b><i class="fas fa-mobile-alt mr-1"></i> Movil</b> <a id="detail-mobile" class="float-right">{{ obj.mobile }}</a>
+                    </li>
+                    <li class="list-group-item">
+                      <b><i class="fas fa-phone mr-1"></i> Telefono</b> <a id="detail-tlf" class="float-right">{{ obj.tlf }}</a>
+                    </li>
+                  </ul>
+
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+
+
+            </div>
+            <div class="col">
+              <!-- About Me Box -->
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 id="detail-name_com" class="card-title">{{ obj.first_name }} {{ obj.last_name }}</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <strong><i class="fas fa-address-card mr-1 "></i> Cedula</strong>
+
+                  <a id="detail-tlf" class="float-right">{{ obj.type_name }}{{ obj.dni }}</a>
+                  </p>
+
+                  <hr>
+
+                  <strong><i class="fas fa-map-marker-alt mr-1"></i> Direccion</strong>
+
+                  <a id="detail-tlf" class="float-right">{{ obj.address }}</a>
+
+                  <hr>
+
+                  <strong><i class="fas fa-mail-bulk mr-1"></i> Email</strong>
+
+                  <a id="detail-tlf" class="float-right">{{ obj.Email }}</a>
+
+                  </p>
+
+                </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+
+      <!-- Main content -->
+      <div class="content">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <div class="card card-success">
+                <div class="card-header">
+                  <h3 class="card-title">Tus Mascotas</h3>
+  
+                  
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                  <table class="table table-hover text-nowrap">                    
+                  {% if pet %}                      
+                    <thead>
+                      <tr>
+                        <th>nombre</th>
+                        <th>Genero</th>
+                        <th>Raza</th>
+                        <th>Peso</th>
+                        <th>Especie</th>
+                        <th>Suplente</th>
+                        <th>Fecha de Naciemiento</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for pets in pet %}
+                        <tr>
+                          <td>{{ pets.name }}</td>
+                          <td>{{ pets.gender}}</td>
+                          <td>{{ pets.race }}</td>
+                          <td>{{ pets.weight }}</td>
+                          <td>{{ pets.specie }}</td>
+                          <td>
+                          {% if pets.substitute %}
+                            {{ pets.substitute }}</td>
+                          {% else %}
+                            <span class="badge badge-dark"> Vacio </span>
+                          {% endif %}
+                          <td>{{ pets.date_nac }}</td>
+                        </tr>
+                      {% endfor %}
+                  {% else %}
+                    <thead>
+                      <th class="text-center"><span class="badge badge-dark">No tiene Mascotas Registradas</span></th>
+                    </thead>
+                    </tbody>
+                  {% endif %}
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+            </div>
+
+          </div>
+          <!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </div>
+      <!-- /.content -->
+
+    </div>
+    <!-- /.content-wrapper -->
+
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+      <!-- To the right -->
+      <div class="float-right d-none d-sm-inline">
+        Anything you want
+      </div>
+      <!-- Default to the left -->
+      <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    </footer>
+  </div>
+
+  <div class="modal fade" id="modal-sm">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Salir</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>¿Esta seguro de salir <small class="badge badge-success">{{request.user.username}}</small>?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+          <a type="button" class="btn btn-success btn-colores" href='{% url "usersys:logout" %}'>Si, Salir</a>
+        </div>
+      </div>
+      <!-- ./wrapper -->
+
+      <!-- REQUIRED SCRIPTS -->
+
+      <!-- jQuery -->
+      <script src="{% static 'lib/plugins/jquery/jquery.min.js' %}"></script>
+      <!-- Bootstrap 4 -->
+      <script src="{% static 'lib/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <!-- AdminLTE App -->
+      <script src="{% static 'lib/adminlte/js/adminlte.min.js' %}"></script>
+      <!-- AdminLTE for demo purposes -->
+      <script src="{% static 'lib/adminlte/js/demo.js' %}"></script>
+      <!-- Jquery Confirm js -->
+      <script src="{% static 'lib/plugins/jquery-confirm-v3/jquery-confirm.min.js' %}"></script>
+      <!-- Codigo js para las paginas -->
+      <script src="{% static 'js/clientuser.js' %}"></script>
+
+</body>
+
+</html>

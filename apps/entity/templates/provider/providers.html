@@ -1,0 +1,195 @@
+{% extends "list.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head_list %}
+  <script src="{% static 'provider/list.js' %}"> </script>
+{% endblock %}
+ 
+{% block add_element %}
+<a href="#" class="btn btn-colores btn-add"><i class="fas fa-plus-square"></i></a>
+{% endblock add_element %}
+ 
+{% block t_body %}
+    <tr>
+        <th scope="col" style="width: 5%;">Id</th>
+        <th scope="col" style="width: 15%;">Nombre</th>
+        <th scope="col" style="width: 12%;">Rif</th>
+        <th scope="col" style="width: 10%;">Movil</th>
+        <th scope="col" style="width: 10%;">Telefono</th>
+        <th scope="col" style="width: 23%;">Email</th>
+        <th scope="col" style="width: 5%;">Estado</th>
+        <th scope="col" style="width: 20%;">Opciones</th>
+    </tr>
+{% endblock t_body %}
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <form method="POST" action="">
+    {% csrf_token %}
+    <input type="hidden" name="action" value="add" id="status">
+    <input type="hidden" name="id" id="id" value="0">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header color-nav">
+            <h5 class="modal-title" id="exampleModalLabel"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+                <div class="card-body">
+                  <div class="form-group">
+                    <div class="row">
+
+                      <div class="col">
+                        <label for="id_name">Nombre <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                        {{ form.name|add_class:'form-control'|attr:'name:name'|attr:'placeholder:Introduzca el Nombre'|attr:'autocomplete:off'|attr:'maxlength:100'|attr:'pattern:[a-zA-Z ]+$' }}
+                      </div>
+                      <div class="col">
+                        <label for="id_rif">Rif</label>
+                        {{ form.rif|add_class:'form-control'|attr:'placeholder:Introduzca el Apellido'|attr:'name:rif'|attr:'autocomplete:off'|attr:'maxlength:100'}}
+                      </div>
+
+                    </div>                      
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+
+                      <div class="col">
+                        <label for="id_Email">Correo Electronico</label>
+                        {{ form.Email|add_class:'form-control'|attr:'name:Email'|attr:'placeholder:Correo Electronico'|attr:'autocomplete:off'}}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <div class="row">
+
+                      <div class="col">
+                        <label for="id_mobile">Movil</label>
+                        {{ form.mobile|add_class:'form-control'|attr:'name:mobile'|attr:'placeholder:Numero Movil'|attr:'autocomplete:off'|attr:'maxlength:11'}}
+                      </div>
+                      <div class="col">
+                        <label for="id_tlf">Telefono Fijo</label>
+                        {{ form.tlf|add_class:'form-control'|attr:'name:tlf'|attr:'placeholder:Numero Fijo'|attr:'autocomplete:off'|attr:'maxlength:11'}}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <div class="custom-control custom-switch custom-switch-on-success custom-switch-off-white">
+                      {{ form.status|add_class:'custom-control-input'|attr:'name:status'|add_class:'status'}}
+                      <label class="custom-control-label" for="id_status" >Estado <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                  </div>
+
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success btn-colores">Guardar</button>
+          </div>
+        </div>
+      </div>
+  </form>
+</div>
+
+<div class="modal fade" id="Modal_Detail" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Large Modal</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-success card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/avatar5.png' %}" alt="User profile picture">
+                </div>
+  
+                <h3 id="detail-name" class="profile-username text-center"></h3>
+    
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b><i class="fas fa-transgender mr-1"></i> Id</b> <a id="detail-id" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-mobile-alt mr-1"></i> Movil</b> <a id="detail-mobile" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-phone mr-1"></i> Telefono</b> <a id="detail-tlf" class="float-right"></a>
+                  </li>
+                </ul>
+                <div class="justify-content-between">
+                  <div class="row">
+                    <div class="col">
+                      <a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="col">
+                      <a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                    <div class="col">
+                      <a href="#" rel="btn-estado" id="status-btn" class="btn btn-colores"><i class="fas fa-power-off"></i></a>
+                    </div>
+                </div>
+
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+  
+           
+          </div>
+          <div class="col">
+             <!-- About Me Box -->
+             <div class="card card-success">
+              <div class="card-header">
+                <h3 id="detail-name_com" class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-address-card mr-1 "></i> Rif</strong>
+  
+                <p class="text-muted" id='detail-rif'>
+                </p>
+  
+                <hr>
+  
+                <strong><i class="fas fa-mail-bulk mr-1"></i> Email</strong>
+  
+                <p id="detail-Email" class="text-muted">
+                <p id="detail-id" hidden class="text-muted">
+
+                </p>
+                
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+{% endblock modal %}
