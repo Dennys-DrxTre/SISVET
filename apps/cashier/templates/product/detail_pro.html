@@ -1,0 +1,130 @@
+{% load static %}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title"></h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col">
+                    <!-- Profile Image -->
+                    <div class="card card-success card-outline">
+                        <div class="card-body box-profile">
+                            <h3 id="detail-name" class="profile-username text-center">{{ prod.name }}</h3>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-sort-numeric-down-alt mr-1"></i>
+                                        Cantidad</b>
+                                    <a id="detail-stock" class="float-right">{{ prod.stock }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-cart-plus mr-1"></i>Vendidos</b>
+                                    <a id="detail-num_sales" class="float-right">{{ prod.num_sales }}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-weight-hanging mr-1"></i>Unidad</b>
+                                    <a id="detail-type_stock" class="float-right">{{ prod.type_stock}}</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b><i class="fas fa-weight mr-1"></i> Cantidad (Unidad)</b>
+                                    <a id="detail-quantity" class="float-right">{{ prod.quantity }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <p id="detail-id" hidden class="text-muted"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <!-- About Me Box -->
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                Agrupacion de productos por fecha de vencimiento
+                            </h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="data2" class="table table-striped table-hover responsive">
+                                    <thead>
+                                        <th scope="col">id</th>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">P. Compra</th>
+                                        <th scope="col">P. Venta</th>
+                                        <th scope="col">F. vencimiento</th>
+                                        <th scope="col">Ganancia</th>
+                                    </thead>
+                                    <tbody>
+                                        {% for obj in stock  %}
+                                            <tr>
+                                                <td>{{ obj.id }}</td>
+                                                <td>{{ obj.product }}</td>
+                                                <td>{{ obj.stock }}</td>
+                                                <td>${{ obj.price_buy }}</td>
+                                                <td>${{ obj.price_sale }}</td>
+                                                <td>{{ obj.date_conquered|date:'d-m-Y' }}</td>
+                                                <td>${{ obj.profit }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-dark" data-dismiss="modal">
+                Cerrar
+            </button>
+        </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+<script>
+    $('#data2').DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrand del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class='fa fa-angle-double-left'></span>",
+                "sLast": "<span class='fa fa-angle-double-right'></span>",
+                "sNext": "<span class='fa fa-angle-right'></span>",
+                "sPrevious": "<span class='fa fa-angle-left'></span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+</script>

@@ -6,21 +6,17 @@
 {% endblock %}
  
 {% block add_element %}
+<a href="#" class="btn btn-colores btn-add"><i class="fas fa-plus-square"></i></a>
 {% endblock add_element %}
  
 {% block t_body %}
     <tr>
-        <th scope="col" style="width: 5%;">id</th>
-        <th scope="col" style="width: 15%;">Nombre</th>
-        <th scope="col" style="width: 7%;">Cantidad</th>
-        <th scope="col" style="width: 11%;">P. Compra</th>
-        <th scope="col" style="width: 10%;">P. Venta</th>
-        <th scope="col" style="width: 10%;">Vencimiento</th>
-        <th scope="col" style="width: 5%;">Ganancia</th>
-        <th scope="col" style="width: 5%;">Unidad</th>
-        <th scope="col" style="width: 5%;">Cant. Unidad</th>
-        <th scope="col" style="width: 5%;">Estado</th>
-        <th scope="col" style="width: 10%;">Opciones</th>
+        <th scope="col">id</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Cant. Unidad</th>
+        <th scope="col">Opciones</th>
     </tr>
 {% endblock t_body %}
 
@@ -28,7 +24,7 @@
 <!-- Modal -->
 <div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
   aria-hidden="true">
-  <form method="POST" action="">
+  <form method="POST" id="form1" action="">
     {% csrf_token %}
     <input type="hidden" name="action" value="add" id="status">
     <input type="hidden" name="id" id="id" value="0">
@@ -53,63 +49,28 @@
                         {{ form.name|add_class:'form-control'|attr:'name:name'|attr:'placeholder:Introduzca el Nombre'|attr:'autocomplete:off'|attr:'maxlength:100' }}
                       </div>
                       <div class="col">
+                        <label for="id_type_stock">Unidad <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                        {{ form.type_stock|add_class:'form-control'|attr:'name:type_stock'|attr:'id:type_stock'}}
+                      </div>
+
+                    </div>
+                  </div>
+
+
+                  <div class="form-group" >
+                    <div class="row">
+
+                      <div class="col" id="div_hidden"> 
+                        <label for="id_quantity">Cantidad (Unidad) <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                        {{ form.quantity|add_class:'form-control'|attr:'name:quantity'}}
+                      </div>
+
+                      <div class="col" id="input_hidden">
                         <label for="id_stock">Cantidad <span class="text-danger" title="Campo Obligatorio">*</span></label>
                         {{ form.stock|add_class:'form-control'|attr:'name:stock'|attr:'placeholder:Introduzca la cantidad'|attr:'autocomplete:off' }}
                       </div>
 
                     </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="row">
-
-                      <div class="col">
-                        <label for="id_price_buy">Precio Compra <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.price_buy|add_class:'form-control'|attr:'name:price_buy'|attr:'id:price_buy'}}
-                      </div>
-                      <div class="col">
-                        <label for="id_price_sale">Precio Venta <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.price_sale|add_class:'form-control'|attr:'name:price_sale'|attr:'placeholder:Direccion'|attr:'id:price_sale'}}
-                      </div>
-
-                    </div>                      
-                  </div>
-
-                  <div class="form-group">
-                    <div class="row">
-
-                      <div class="col">
-                        <label for="id_date_conquered">Fecha de Vencimiento <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.date_conquered|add_class:'form-control'|attr:'name:date_conquered'|attr:'type:date'}}
-                      </div>
-
-
-                      <div class="col">
-                        <label for="id_profit">Ganancia <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.profit|add_class:'form-control'|attr:'name:profit'|attr:'placeholder: Ganancia'|attr:'autocomplete:off'|attr:'id:profit'}}
-                      </div>
-
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="row">
-
-                      <div class="col">
-                        <label for="id_type_stock">Unidad <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.type_stock|add_class:'form-control'|attr:'name:type_stock'|attr:'id:type_stock'}}
-                      </div>
-                      <div class="col" id="div-hidden"> 
-                        <label for="id_quantity">Cantidad (Unidad) <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.quantity|add_class:'form-control'|attr:'name:quantity'}}
-                      </div>
-
-                    </div>
-                  </div>
-            
-                  <div class="custom-control custom-switch custom-switch-on-success custom-switch-off-white">
-                      {{ form.status|add_class:'custom-control-input'|attr:'name:status'|add_class:'status'}}
-                      <label class="custom-control-label" for="id_status" >Estado <span class="text-danger" title="Campo Obligatorio">*</span></label>
                   </div>
                 </div>
             </div>
@@ -122,109 +83,7 @@
       </div>
   </form>
 </div>
-
-<div class="modal fade" id="Modal_Detail" style="display: none;" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title"></h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">×</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-          <div class="col-md-6">
-
-            <!-- Profile Image -->
-            <div class="card card-success card-outline">
-              <div class="card-body box-profile">
-                <div class="text-center">
-                  <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/product.png' %}" alt="User profile picture">
-                </div>
-  
-                <h3 id="detail-name1" class="profile-username text-center"></h3>
-    
-                <ul class="list-group list-group-unbordered mb-3">
-                  <li class="list-group-item">
-                    <b><i class="fas fa-sort-numeric-down-alt mr-1"></i> Cantidad</b> <a id="detail-stock" class="float-right"></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b><i class="fas fa-calendar-times mr-1"></i>Fecha de Vencimiento</b> <a id="detail-date" class="float-right"></a>
-                  </li>
-                  <li class="list-group-item">
-                    <b><i class="fas fa-funnel-dollar mr-1"></i> Ganancia</b> <a id="detail-profit" class="float-right"></a>
-                  </li>
-                </ul>
-                <div class="justify-content-between">
-
-                  <div class="row">
-                    <div class="col">
-                      <a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
-                    </div>
-                    <div class="col">
-                      <a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-  
-           
-          </div>
-          <div class="col">
-             <!-- About Me Box -->
-             <div class="card card-success">
-              <div class="card-header">
-                <h3 id="detail-name2" class="card-title"></h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <strong><i class="fas fa-comment-dollar mr-1 "></i> Precio de Compra</strong>
-  
-                <p class="text-muted" id='detail-buy'>
-                </p>
-  
-                <hr>
-
-                <strong><i class="fas fa-comments-dollar mr-1 "></i> Precio de Venta</strong>
-  
-                <p class="text-muted" id='detail-sale'>
-                </p>
-  
-                <hr>
-  
-                <strong><i class="fas fa-weight-hanging mr-1"></i>Unidad</strong>
-  
-                <p id="detail-type" class="text-muted"></p>
-  
-                <hr>
-
-                <strong><i class="fas fa-weight mr-1"></i>Cantidad (Unidad)</strong>
-  
-                <p id="detail-quantity" class="text-muted"></p>
-  
-                <p id="detail-id" hidden class="text-muted">
-
-                </p>
-                
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
-        </div>
-        
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+<div class="modal fade" id="Modal_Detail" style="display: none" aria-hidden="true">
 </div>
+
 {% endblock modal %}

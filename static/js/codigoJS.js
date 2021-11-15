@@ -13,12 +13,31 @@ function message_error(obj) {
 
 }
 
-
 /* Regresar a la pagina anterior */
 function PagePrevious() {
     window.history.back();
 }
 
+function submit_detail(url, parameters, callback) {
+    $.ajax({
+        url: url, //window.location.pathname
+        type: 'POST',
+        data: parameters,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+    }).done(function (data) {
+        if (!data.hasOwnProperty('error')) {
+            callback(data);
+            return false;
+        }
+        message_error(data.error);
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        alert(textStatus + ': ' + errorThrown);
+    }).always(function (data) {
+
+    });
+}
 
 /* jquery confirm para formularios */
 function submit_with_ajax(url, title, content, parameters, callback) {
@@ -69,6 +88,37 @@ function submit_with_ajax(url, title, content, parameters, callback) {
 }
 
 
+function submit_action(title, content, callback) {
+    $.confirm({
+        theme: 'bootstrap',
+        title: title,
+        icon: 'fa fa-info',
+        content: content,
+        columnClass: 'small',
+        typeAnimated: true,
+        cancelButtonClass: 'btn-primary',
+        draggable: true,
+        dragWindowBorder: false,
+        buttons: {
+            info: {
+                text: "Si",
+                btnClass: 'btn-primary',
+                action: function () {
+                    callback();
+                }
+            },
+            danger: {
+                text: "No",
+                btnClass: 'btn-red',
+                action: function () {
+
+                }
+            },
+        }
+    })
+}
+
+/**
 $(function () {
 
     setInterval(function () {
@@ -113,3 +163,4 @@ $(function () {
 
     },1000);
 });
+*/

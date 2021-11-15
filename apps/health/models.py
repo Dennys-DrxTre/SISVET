@@ -1,8 +1,9 @@
 from django.db import models
 from CONFIG.settings import MEDIA_URL
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from django.forms import model_to_dict
 from apps.entity.models import my_urlsecret, Estado, Pet
+
 # Create your models here.
 
 class Consultation(Estado):
@@ -10,8 +11,8 @@ class Consultation(Estado):
     symptom = models.CharField(max_length = 60, verbose_name='Sintomas')
     temperature = models.FloatField(default=0, verbose_name='Temperatura')
     total = models.FloatField(default=0, verbose_name='Total')
-    date_c = models.DateField(auto_now=False, auto_now_add=False, verbose_name='Fecha Creacion')
-    date_u = models.DateField(auto_now=True, verbose_name='Fecha Actualizacion')
+    date_c = models.DateField(auto_now_add=False, verbose_name='Fecha Creacion')
+    date_u = models.DateField(auto_now=False, verbose_name='Fecha Actualizacion')
     diag_pre = models.CharField(max_length = 50, null = True, blank=True, verbose_name='Diagnostico preventivo')
     diag_def = models.CharField(max_length = 50, null = True, blank=True, verbose_name='Diagnostico definitivo')
     fre_car = models.FloatField(default=0, null = True, blank=True, verbose_name='Frecuencia cardiaca')
@@ -20,10 +21,11 @@ class Consultation(Estado):
     pet = models.ForeignKey(Pet, on_delete=models.CASCADE, verbose_name='Paciente')
     
     def __str__(self):
-        return (self.id)
+        return str(self.id)
 
     def toJSON(self):
         item = model_to_dict(self)
+        item['pet'] = {'id':self.pet.id, 'name': self.pet.name}
         return item
 
     class Meta:

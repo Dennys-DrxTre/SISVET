@@ -1,0 +1,108 @@
+{% extends 'form.html' %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block form %}
+<form action="post">
+    <div class="card">
+        <div class="card-body">
+    
+            <div class="row">
+                <div class="col">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Detalles de la Factura</h3>
+                            <div class="card-tools">
+                                <a href="#" rel="btn_delete" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" name="action" value="{{ action }}" hidden>
+    
+                            <div class="row">
+    
+                                <div class="form-group col-6">
+                                    <label for="exampleInputPassword1">Cliente:</label>
+                                    {{ form.client|add_class:'form-control'|attr:'name:client'|add_class:'select22'|attr:'style:width:100%'|attr:'required'}}
+                                </div>
+        
+                                <div class="form-group col">
+                                    <label for="exampleInputPassword1">SubTotal:</label>
+                                    {{ form.sub_total|add_class:'form-control'|attr:'name:sub_total'|attr:'placeholder:SubTotal'|attr:'readonly:readonly'}}
+                                </div>
+        
+                                <div class="form-group col-md-4">
+                                    <label for="exampleInputPassword1">Iva:</label>
+                                    {{ form.iva|add_class:'form-control'|attr:'name:iva'|attr:'placeholder:Iva'|attr:'type:text'}}
+                                </div>
+        
+                                <div class="form-group col">
+                                    <label for="date">Total:</label>
+                                    {{ form.total|add_class:'form-control'|attr:'name:total'|attr:'readonly:readonly'}}
+                                </div>
+        
+                            </div>
+    
+    
+    
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Registrar Producto</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <label for="product">Buscador de Productos:</label>
+                                <div class="input-group">
+                                    <select class="form-control select2" name="search" style="width: 100%;"></select>
+                                  </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="card-body">
+    
+                            <table id="data2" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 10%;">F. Vencimiento</th>
+                                        <th scope="col" style="width: 10%;">Producto</th>
+                                        <th scope="col" style="width: 15%;">P. Compra</th>
+                                        <th scope="col" style="width: 15%;">P. Venta</th>
+                                        <th scope="col" style="width: 15%;">Cantidad</th>
+                                        <th scope="col" style="width: 12%;">Ganancia</th>
+                                        <th scope="col" style="width: 12%;">Total</th>
+                                        <th scope="col" style="width: 10%;">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" onclick="PagePrevious()" class="btn btn-danger">Cancelar</button>
+                        <button type="submit" class="btn btn-colores">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock form %}
+
+{% block script %} 
+    vents.items.products = {{ det|safe }};
+    vents.list();
+{% endblock script %}
+
+{% block form.js %}
+    <script src="{% static 'sale/form_edit.js' %}"> </script>
+{% endblock form.js %}

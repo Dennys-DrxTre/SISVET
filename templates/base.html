@@ -68,6 +68,9 @@
   
     {% block pluginsjs %}
     {% endblock pluginsjs %}
+
+    {% block form.js %}
+    {% endblock form.js %}
 </body>
 
   <script>
@@ -86,6 +89,10 @@
           {% endif %}
         {% endfor %}
     {% endif %}
+    
+
+    {% block script %}   
+    {% endblock script %}
   </script>
 
   {% block modal %}      

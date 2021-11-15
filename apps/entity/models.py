@@ -1,6 +1,6 @@
 from django.db import models
 from CONFIG.settings import MEDIA_URL
-from datetime import datetime
+from datetime import datetime, date
 from django.forms import model_to_dict
 from apps.entity.choices import type_client, gender_choices, gender_pet, species_pet
 
@@ -14,6 +14,8 @@ def my_urlsecret():
 class Estado(models.Model):
     status = models.BooleanField(default=True, verbose_name='Estado')
     urlsecret = models.SlugField(max_length=50, default=my_urlsecret , null=True , blank=True)
+    next_visit = models.DateField(default=date.today, verbose_name='Proxima visita', null=True , blank=True)
+
     
     class Meta:
         abstract=True

@@ -48,7 +48,6 @@ function getData() {
             {"data": "last_name"},
             {"data": "gender"},
             {"data": "mobile"},
-            {"data": "tlf"},
             {"data": "status"},
             {"data": "status"}
         ],
@@ -59,6 +58,7 @@ function getData() {
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
+                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
                     if (data == '<span class="badge badge-success btn-colores">Activado</span>'){
                         buttons += '<a href="#" rel="btn-estado" class="btn btn-colores"><i class="fas fa-power-off"></i></a> ';
@@ -67,16 +67,6 @@ function getData() {
                     }
                    
                     return buttons;
-                }
-            },
-            {
-                targets: [0],
-                class: 'text-center',
-                orderable: false,
-                render: function (data, type, row) {
-
-                    button = '<strong><a rel="detail" class="product-title text-success btn-detail" href="#">'+data+'</a></strong>'
-                    return button;
                 }
             },
             {
@@ -113,7 +103,6 @@ $(function () {
         var data = tblCate.row(tr.row).data();
         id = document.querySelector('#detail-id').textContent = data.id;
         dni = document.querySelector('#detail-dni').textContent = data.type_name + data.dni;
-        name_pro = document.querySelector('#detail-name_pro').textContent = data.first_name;
         gender = document.querySelector('#detail-gender').textContent = data.gender;
         if (gender == 'Femenino'){
             img = document.querySelector('#detail-img').setAttribute("src","/static/img/avatar2.png");
@@ -123,14 +112,10 @@ $(function () {
         mobile = document.querySelector('#detail-mobile').textContent = data.mobile;
         tlf = document.querySelector('#detail-tlf').textContent = data.tlf;
         name_com = document.querySelector('#detail-name_com').textContent = data.first_name + ' ' + data.last_name;
+        name = document.querySelector('#detail-name').textContent = data.first_name;
         address = document.querySelector('#detail-address').textContent = data.address;
         Email = document.querySelector('#detail-Email').textContent = data.Email;
-        if (data.status == '<span class="badge badge-success btn-colores">Activado</span>') {
-            input = document.querySelector('#status-btn').setAttribute('class','btn btn-colores');
-            
-        }else{
-            input = document.querySelector('#status-btn').setAttribute('class','btn btn-dark');
-        };
+
         $('#Modal_Detail').modal('show');
 
         /** DETAIL CLIENT EDIT */
@@ -170,7 +155,6 @@ $(function () {
         parameters.append('action', 'delete')
         
         parameters.append('id', id)
-        console.log(parameters)
         submit_with_ajax(window.location.pathname,'Notifiación', '¿Estas seguro de eliminar este registro?', parameters, function () {
             
             tblCate.ajax.reload();
@@ -201,7 +185,7 @@ $(function () {
         $('input[name="action"]').val('add')
         modal_title.find('h5').html('Registrar Cliente')
         $('form')[0].reset();
-        input = document.querySelector('.Estado').setAttribute('checked','checked');
+        input = document.querySelector('.status').setAttribute('checked','checked');
         $('#ModalNew').modal('show');
  
 
@@ -256,7 +240,6 @@ $(function () {
         
         var tr = tblCate.cell($(this).closest('td, li')).index();
         var data = tblCate.row(tr.row).data();
-        console.log(data)
         var parameters = new FormData();
         parameters.append('action', 'btn-estado')
         parameters.append('id', data.id)

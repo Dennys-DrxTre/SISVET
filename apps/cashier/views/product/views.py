@@ -11,7 +11,7 @@ from django.contrib import messages
 from datetime import datetime
 
 from apps.cashier.forms import ProductForm
-from apps.cashier.models import Product
+from apps.cashier.models import Product, ChildProduct
 
 from apps.entity.mixins import Perms_Check
 
@@ -38,23 +38,28 @@ class ProductViews(Perms_Check, TemplateView):
                         i.status = '<span class="badge badge-dark">Desactivado</span>'
                     data.append(i.toJSON())
             
+            elif action == 'add':
+                perms = ('cashier.add_product',)
+                if request.user.has_perms(perms):
+                    pro = Product()
+                    pro.name = request.POST.get('name')
+                    pro.stock = request.POST.get('stock')
+                    pro.type_stock = request.POST.get('type_stock')
+                    pro.quantity = request.POST.get('quantity')
+                    pro.save()
+                else: data['error'] = 'No tienes permisos para registrar un producto'
+            
             elif action == 'edit':
                 perms = ('cashier.change_product',)
                 if request.user.has_perms(perms):
                     pro = Product.objects.get(pk=request.POST['id'])
                     pro.name = request.POST.get('name')
                     pro.stock = request.POST.get('stock')
-                    pro.price_buy = request.POST.get('price_buy')
-                    pro.price_sale = request.POST.get('price_sale')
-                    pro.date_conquered = request.POST.get('date_conquered')
-                    pro.profit = request.POST.get('profit')
-                    pro.num_sales = request.POST.get('num_sales')
                     pro.type_stock = request.POST.get('type_stock')
                     pro.quantity = request.POST.get('quantity')
-                    pro.status = 'status' in request.POST
                     pro.save()
                 else:
-                    data['error'] = 'No tiene permisos para editar una mascota'      
+                    data['error'] = 'No tiene permisos para editar un producto'      
 
             elif action == 'delete':
                 perms = ('cashier.delete_product',)
@@ -62,20 +67,7 @@ class ProductViews(Perms_Check, TemplateView):
                     pro = Product.objects.get(pk=request.POST['id'])            
                     pro.delete()
                 else:
-                    data['error'] = 'No tiene permisos para eliminar una mascota'
-            
-            elif action == 'btn-estado':
-                perms = ('cashier.change_product',)
-                if request.user.has_perms(perms):
-                    pro = Product.objects.get(pk=request.POST['id'])
-                    if pro.status:
-                        pro.status = False
-                        pro.save()
-                    else:
-                        pro.status = True
-                        pro.save()
-                else:
-                    data['error'] = 'No tiene permisos para editar una mascota'  
+                    data['error'] = 'No tiene permisos para eliminar un producto'
 
             else:
                 data['error'] = 'Ha ocurrido un error'           
@@ -93,3 +85,24 @@ class ProductViews(Perms_Check, TemplateView):
         context['form'] = ProductForm()
         context['list_url'] = reverse_lazy('cashier:products')
         return context
+
+def detail_product(request, id):
+    template_name = 'product/detail_pro.html'
+    context = {}
+
+    if id:
+        prod = Product.objects.filter(pk = id).first()
+        stock = ChildProduct.objects.filter(product = id).filter(stock__gt=0)
+
+        context = {
+            'prod': prod,
+            'stock': stock
+        }
+
+    else:
+        context = {
+            'prod': 'No hay datos',
+            'stock': 'No hay datos'
+        }
+
+    return render(request, template_name, context)

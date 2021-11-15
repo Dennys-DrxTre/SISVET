@@ -47,7 +47,6 @@ function getData() {
             {"data": "name"},
             {"data": "date_nac"},
             {"data": "gender"},
-            {"data": "race"},
             {"data": "weight"},
             {"data": "specie"},
             {"data": "substitute"},
@@ -63,6 +62,7 @@ function getData() {
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
+                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';
                     if (data == '<span class="badge badge-success btn-colores">Activado</span>'){
                         buttons += '<a href="#" rel="btn-estado" class="btn btn-colores"><i class="fas fa-power-off"></i></a> ';
                     }else if (data == '<span class="badge badge-dark">Desactivado</span>'){
@@ -73,17 +73,7 @@ function getData() {
                 }
             },
             {
-                targets: [1],
-                class: 'text-center',
-                orderable: false,
-                render: function (data, type, row) {
-
-                   button = '<strong><a rel="detail" class="product-title text-success btn-detail" href="#">'+data+'</a></strong>'
-                    return button;
-                }
-            },
-            {
-                targets: [7],
+                targets: [6],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {
@@ -98,7 +88,7 @@ function getData() {
                 }
             },
             {
-                targets: [5],
+                targets: [4],
                 class: 'text-center',
                 orderable: false,
                 render: function (data, type, row) {

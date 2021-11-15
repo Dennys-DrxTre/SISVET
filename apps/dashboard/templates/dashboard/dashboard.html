@@ -3,21 +3,377 @@
 {% block tittle %}
 <title>SISVET | Inicio</title>
 {% endblock tittle %}
+
+{% block pluginscss %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock pluginscss %}
+
 {% block contenido %}
 <section class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-left">
-            <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
-            <li class="breadcrumb-item active">Inicio</li>
-          </ol>
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+          <li class="breadcrumb-item active">Inicio</li>
+        </ol>
       </div>
     </div>
   </div><!-- /.container-fluid -->
 </section>
 
 <section class="content">
+  <div class="container-fluid">
+    <!-- Info boxes -->
+    <div class="row">
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
+          <div class="info-box-content">
+            <span class="info-box-text">Ventas</span>
+            <span class="info-box-number">
+              {% if count_sale %}{{count_sale|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cart-plus"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Compras</span>
+            <span class="info-box-number">
+              {% if count_buy %}{{count_buy|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <!-- fix for small devices only -->
+      <div class="clearfix hidden-md-up"></div>
+
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-dark elevation-1"><i class="fas fa-address-book"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Clientes</span>
+            <span class="info-box-number">
+              {% if count_client %}{{count_client|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Proveedores</span>
+            <span class="info-box-number">
+              {% if count_provider %}{{count_provider|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book-reader"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Ganancias</span>
+            <span class="info-box-number">
+              {% if sum_profit %}{{sum_profit}}${% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-navy elevation-1"><i class="fas fa-book-reader"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Mascotas</span>
+            <span class="info-box-number">
+              {% if count_pet %}{{count_pet|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+    </div>
+
+
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Clientes</h3>
+            <div class="card-tools">
+              <a href="clients.html" class="btn btn-sm bg-dark"><i class="fas fa-list-alt"></i></a>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>183</td>
+                  <td>John Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-success">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>219</td>
+                  <td>Alexander Pierce</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-warning">Pending</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>657</td>
+                  <td>Bob Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-primary">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>175</td>
+                  <td>Mike Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-danger">Denied</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Mascotas</h3>
+            <div class="card-tools">
+              <a href="#" class="btn btn-sm bg-navy"><i class="fas fa-list-alt"></i></a>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>183</td>
+                  <td>Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-success">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>219</td>
+                  <td>Pierce</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-warning">Pending</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>657</td>
+                  <td>Bob</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-primary">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>175</td>
+                  <td>Mike</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-danger">Denied</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Compras</h3>
+            <div class="card-tools">
+              <a href="clients.html" class="btn btn-sm bg-danger"><i class="fas fa-list-alt"></i></a>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>183</td>
+                  <td>John Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-success">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>219</td>
+                  <td>Alexander Pierce</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-warning">Pending</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>657</td>
+                  <td>Bob Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-primary">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>175</td>
+                  <td>Mike Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-danger">Denied</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+
+      <div class="col-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Ventas</h3>
+            <div class="card-tools">
+              <a href="#" class="btn btn-sm bg-info"><i class="fas fa-list-alt"></i></a>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body table-responsive p-0">
+            <table class="table table-hover text-nowrap">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nombre</th>
+                  <th>Fecha</th>
+                  <th>Estado</th>
+                  <th>Descripcion</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>183</td>
+                  <td>Doe</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-success">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>219</td>
+                  <td>Pierce</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-warning">Pending</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>657</td>
+                  <td>Bob</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-primary">Approved</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+                <tr>
+                  <td>175</td>
+                  <td>Mike</td>
+                  <td>11-7-2014</td>
+                  <td><span class="tag tag-danger">Denied</span></td>
+                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+
+
+  </div>
 </section>
 {% endblock contenido %}
+
+{% block pluginsjs %}
+<!-- DataTables -->
+<script src="{% static 'lib/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+<script src="{% static 'lib/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
+<script src="{% static 'dashboard/list.js' %}"></script>
+{% endblock pluginsjs %}

@@ -16,9 +16,8 @@
         <th scope="col" style="width: 15%;">Apellidos</th>
         <th scope="col" style="width: 10%;">Genero</th>
         <th scope="col" style="width: 10%;">Movil</th>
-        <th scope="col" style="width: 10%;">Telefono</th>
         <th scope="col" style="width: 5%;">Estado</th>
-        <th scope="col" style="width: 15%;">Opciones</th>
+        <th scope="col" style="width: 20%;">Opciones</th>
     </tr>
 {% endblock t_body %}
 
@@ -143,7 +142,7 @@
                   <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/avatar5.png' %}" alt="User profile picture">
                 </div>
   
-                <h3 id="detail-name_pro" class="profile-username text-center"></h3>
+                <h3 id="detail-name" class="profile-username text-center"></h3>
     
                 <ul class="list-group list-group-unbordered mb-3">
                   <li class="list-group-item">
@@ -174,42 +173,46 @@
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
-  
            
           </div>
+
           <div class="col">
-             <!-- About Me Box -->
-             <div class="card card-success">
-              <div class="card-header">
-                <h3 id="detail-name_com" class="card-title"></h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <strong><i class="fas fa-address-card mr-1 "></i> Cedula</strong>
+            <!-- About Me Box -->
+            <div class="card card-success">
+             <div class="card-header">
+               <h3 id="detail-name_com" class="card-title"></h3>
+             </div>
+             <!-- /.card-header -->
+             <div class="card-body">
+                <strong><i class="fas fa-user mr-1 "></i> Cedula</strong>
   
                 <p class="text-muted" id='detail-dni'>
                 </p>
-  
-                <hr>
-  
-                <strong><i class="fas fa-map-marker-alt mr-1"></i> Direccion</strong>
-  
-                <p id="detail-address" class="text-muted"></p>
-  
-                <hr>
-  
-                <strong><i class="fas fa-mail-bulk mr-1"></i> Email</strong>
-  
-                <p id="detail-Email" class="text-muted">
-                <p id="detail-id" hidden class="text-muted">
 
-                </p>
-                
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-          </div>
+               <strong><i class="fas fa-user mr-1 "></i> Direccion</strong>
+ 
+               <p class="text-muted" id='detail-address'>
+               </p>
+ 
+               <hr>
+
+               <strong><i class="fas fa-users mr-1 "></i> Correo Electronico</strong>
+ 
+               <p class="text-muted" id='detail-Email'>
+               </p>
+ 
+               <hr>
+ 
+               <p id="detail-id" hidden class="text-muted">
+
+               </p>
+               
+             </div>
+             <!-- /.card-body -->
+           </div>
+           <!-- /.card -->
+         </div>
+          
         </div>
         
       </div>
