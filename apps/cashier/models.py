@@ -1,6 +1,6 @@
 from django.db import models
 from CONFIG.settings import MEDIA_URL
-from datetime import datetime
+from datetime import datetime, date
 from django.forms import model_to_dict
 from apps.entity.choices import unidad_product, type_sale_buy
 from apps.entity.models import Client, Provider, Estado, my_urlsecret
@@ -52,7 +52,7 @@ class ChildProduct(Estado):
 
     
 class Buy_Sale(Estado):
-    date = models.DateField(auto_now_add=True, verbose_name='Fecha')
+    date = models.DateField(default=date.today, verbose_name='Fecha')
     total = models.FloatField(default=0, verbose_name='Total')
     iva = models.FloatField(default=0, verbose_name='IVA')
     sub_total = models.FloatField(default=0, verbose_name='Sub Total')

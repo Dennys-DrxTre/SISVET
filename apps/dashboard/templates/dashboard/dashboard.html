@@ -82,7 +82,7 @@
       <!-- /.col -->
       <div class="col-6 col-sm-6 col-md-2">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-book-reader"></i></span>
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-truck-loading"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Proveedores</span>
@@ -98,12 +98,12 @@
       <!-- /.col -->
       <div class="col-6 col-sm-6 col-md-2">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-book-reader"></i></span>
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-dollar-sign"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Ganancias</span>
             <span class="info-box-number">
-              {% if sum_profit %}{{sum_profit}}${% else %}0{% endif %}
+              {% if sum_profit %}${{sum_profit|floatformat:2}}{% else %}0{% endif %}
               <small>(registradas)</small>
             </span>
           </div>
@@ -114,7 +114,7 @@
       <!-- /.col -->
       <div class="col-6 col-sm-6 col-md-2">
         <div class="info-box mb-3">
-          <span class="info-box-icon bg-navy elevation-1"><i class="fas fa-book-reader"></i></span>
+          <span class="info-box-icon bg-navy elevation-1"><i class="fas fa-paw"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Mascotas</span>
@@ -138,50 +138,41 @@
           <div class="card-header">
             <h3 class="card-title">Clientes</h3>
             <div class="card-tools">
-              <a href="clients.html" class="btn btn-sm bg-dark"><i class="fas fa-list-alt"></i></a>
+              <a href="{% url 'entity:clients' %}" class="btn btn-sm bg-dark"><i class="fas fa-list-alt"></i></a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table id="clients" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Cedula</th>
                   <th>Nombre</th>
-                  <th>Fecha</th>
-                  <th>Estado</th>
-                  <th>Descripcion</th>
+                  <th>Apellido</th>
+                  <th>Genero</th>
+                  <th>Movil</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                {% if list_clients %}
+                  {% for clients in list_clients %}
+                    <tr>
+                        <td>{{ clients.dni }}</td>
+                        <td>{{ clients.first_name }}</td>
+                        <td>{{ clients.last_name }}</td>
+                        <td>{{ clients.gender}}</td>
+                        <td>{{ clients.mobile }}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
@@ -195,50 +186,41 @@
           <div class="card-header">
             <h3 class="card-title">Mascotas</h3>
             <div class="card-tools">
-              <a href="#" class="btn btn-sm bg-navy"><i class="fas fa-list-alt"></i></a>
+              <a href="{% url 'entity:pets' %}" class="btn btn-sm bg-navy"><i class="fas fa-list-alt"></i></a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table id="pets" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>Id</th>
                   <th>Nombre</th>
-                  <th>Fecha</th>
-                  <th>Estado</th>
-                  <th>Descripcion</th>
+                  <th>Sexo</th>
+                  <th>Especie</th>
+                  <th>Cliente</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                {% if list_pets %}
+                  {% for pets in list_pets %}
+                    <tr>
+                      <td>{{ pets.id }}</td>
+                      <td>{{ pets.name }}</td>
+                      <td>{{ pets.gender }}</td>
+                      <td>{{ pets.specie }}</td>
+                      <td>{{ pets.client.type_name }}{{ pets.client }}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                    <tr>
+                      <td>Sin Datos</td>
+                      <td>Sin Datos</td>
+                      <td>Sin Datos</td>
+                      <td>Sin Datos</td>
+                      <td>Sin Datos</td>
+                    </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
@@ -254,50 +236,41 @@
           <div class="card-header">
             <h3 class="card-title">Compras</h3>
             <div class="card-tools">
-              <a href="clients.html" class="btn btn-sm bg-danger"><i class="fas fa-list-alt"></i></a>
+              <a href="{% url 'cashier:buys' %}" class="btn btn-sm bg-danger"><i class="fas fa-list-alt"></i></a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table id="buys" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
+                  <th>Id</th>
+                  <th>Proveedor</th>
                   <th>Fecha</th>
-                  <th>Estado</th>
-                  <th>Descripcion</th>
+                  <th>Tipo</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                {% if list_buys %}
+                  {% for buys in list_buys %}
+                    <tr>
+                        <td>{{ buys.id }}</td>
+                        <td>{{ buys.provider }}</td>
+                        <td>{{ buys.date|date:"d-m-Y" }}</td>
+                        <td>{{ buys.type_bs }}</td>
+                        <td>${{ buys.total|floatformat:2}}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
@@ -311,50 +284,41 @@
           <div class="card-header">
             <h3 class="card-title">Ventas</h3>
             <div class="card-tools">
-              <a href="#" class="btn btn-sm bg-info"><i class="fas fa-list-alt"></i></a>
+              <a href="{% url 'cashier:sales' %}" class="btn btn-sm bg-info"><i class="fas fa-list-alt"></i></a>
             </div>
           </div>
           <!-- /.card-header -->
           <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
+            <table id="sales" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>ID</th>
-                  <th>Nombre</th>
+                  <th>Id</th>
+                  <th>Cliente</th>
                   <th>Fecha</th>
-                  <th>Estado</th>
-                  <th>Descripcion</th>
+                  <th>Tipo</th>
+                  <th>Total</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
+                {% if list_sales %}
+                  {% for sales in list_sales%}
+                    <tr>
+                        <td>{{ sales.id }}</td>
+                        <td>{{ sales.client.type_name }}{{ sales.client }}</td>
+                        <td>{{ sales.date|date:"d-m-Y" }}</td>
+                        <td>{{ sales.type_bs }}</td>
+                        <td>${{ sales.total|floatformat:2}}</td>
+                    </tr>
+                  {% endfor %}
+                {% else %}
+                  <tr>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                    <td>Sin Datos</td>
+                  </tr>
+                {% endif %}
               </tbody>
             </table>
           </div>
@@ -364,16 +328,58 @@
       </div>
     </div>
 
-
   </div>
 </section>
 {% endblock contenido %}
 
+
 {% block pluginsjs %}
-<!-- DataTables -->
-<script src="{% static 'lib/plugins/datatables/jquery.dataTables.min.js' %}"></script>
-<script src="{% static 'lib/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
-<script src="{% static 'lib/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
-<script src="{% static 'lib/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
-<script src="{% static 'dashboard/list.js' %}"></script>
+
+
+<script>
+    $(function () {
+      $("#clients,#pets,#buys,#sales").DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        ordering: false,
+        searching: false,
+        paging: false,
+        info: false,
+        language: {
+          sProcessing: "Procesando...",
+          sLengthMenu: "Mostrar _MENU_ registros",
+          sZeroRecords: "No se encontraron resultados",
+          sEmptyTable: "Ningún dato disponible en esta tabla",
+          sInfo: "Mostrando _START_ al _END_ de un total de _TOTAL_ registros",
+          sInfoEmpty: "Mostrando 0 al 0 de un total de 0 registros",
+          sInfoFiltered: "(filtrado de un total de _MAX_ registros)",
+          sInfoPostFix: "",
+          sSearch: "Buscar:",
+          sUrl: "",
+          sInfoThousands: ",",
+          sLoadingRecords: "Cargando...",
+          oPaginate: {
+            sFirst: "<span class='fa fa-angle-double-left'></span>",
+            sLast: "<span class='fa fa-angle-double-right'></span>",
+            sNext: "<span class='fa fa-angle-right'></span>",
+            sPrevious: "<span class='fa fa-angle-left'></span>",
+          },
+          oAria: {
+            sSortAscending:
+              ": Activar para ordenar la columna de manera ascendente",
+            sSortDescending:
+              ": Activar para ordenar la columna de manera descendente",
+          },
+        },
+      });
+    });
+
+  </script>
+  <!-- DataTables -->
+  <script src="{% static 'lib/plugins/datatables/jquery.dataTables.min.js' %}"></script>
+  <script src="{% static 'lib/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'lib/plugins/datatables-responsive/js/dataTables.responsive.min.js' %}"></script>
+  <script src="{% static 'lib/plugins/datatables-responsive/js/responsive.bootstrap4.min.js' %}"></script>
 {% endblock pluginsjs %}
+

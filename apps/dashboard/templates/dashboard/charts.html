@@ -1,0 +1,451 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>SISVET | Estadisticas</title>
+{% endblock tittle %}
+
+{% block pluginscss %}
+<!-- DataTables -->
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css' %}">
+<link rel="stylesheet" href="{% static 'lib/plugins/datatables-responsive/css/responsive.bootstrap4.min.css' %}">
+{% endblock pluginscss %}
+
+{% block contenido %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-left">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+          <li class="breadcrumb-item active">Estadisticas</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box">
+          <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Ventas</span>
+            <span class="info-box-number">
+              {% for pm in  profit_month_s.all %}{% if forloop.last %}${{pm.ganancias|floatformat:2}}{% endif %}{% empty %}$0.00{% endfor %} <br>
+              <small>({% for pm in profit_month_s.all %} {% if forloop.last %} {{ pm.month|date:"m/Y" }} {% endif %}{% endfor %})</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-cart-plus"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Compras</span>
+            <span class="info-box-number">
+              {% for pm in  profit_month_b.all %}{% if forloop.last %}${{pm.ganancias|floatformat:2}}{% endif %}{% empty %}$0.00{% endfor %} <br>
+              <small>({% for pm in profit_month_b.all %} {% if forloop.last %} {{ pm.month|date:"m/Y" }} {% endif %}{% endfor %})</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+      <!-- fix for small devices only -->
+      <div class="clearfix hidden-md-up"></div>
+
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-dollar-sign"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Ganancias</span>
+            <span class="info-box-number">
+              {% for pm in  profit_month.all %}{% if forloop.last %}${{pm.ganancias|floatformat:2}}{% endif %}{% empty %}$0.00{% endfor %} <br>
+              <small>({% for pm in profit_month.all %} {% if forloop.last %} {{ pm.month|date:"m/Y" }} {% endif %}{% endfor %})</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-info elevation-1"><i class="fas fa-user-md"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Consultas</span>
+            <span class="info-box-number">
+              {% if count_provider %}{{count_provider|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-dark elevation-1"><i class="fas fa-syringe"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Vacunaciones</span>
+            <span class="info-box-number">
+              {% if sum_profit %}{{sum_profit|floatformat:2}}${% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+      <div class="col-6 col-sm-6 col-md-2">
+        <div class="info-box mb-3">
+          <span class="info-box-icon bg-navy elevation-1"><i class="fas fa-bug"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-text">Desparitaciones</span>
+            <span class="info-box-number">
+              {% if count_pet %}{{count_pet|length}}{% else %}0{% endif %}
+              <small>(registradas)</small>
+            </span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
+
+    </div>
+
+    <div class="row">
+
+      <!-- Line Chart -->
+      <div class="col-xl-6 col-lg-6 mb-2">
+        <div class="card mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">Ventas mensuales (Grafico)</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="chart-pie pt-6" >
+              <canvas id="line-sale"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Line Chart -->
+      <div class="col-xl-6 col-lg-6 mb-2">
+        <div class="card mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">Compras mensuales (Grafico)</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="chart-pie pt-6" >
+              <canvas id="line-buy"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+    <div class="row">
+
+      <!-- Line Chart -->
+      <div class="col-xl-6 col-lg-6 mb-2">
+        <div class="card mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">Ganancias mensuales (Grafico)</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="chart-pie pt-6" >
+              <canvas id="line-profit"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pie Chart -->
+      <div class="col-xl-6 col-lg-6 mb-2">
+        <div class="card mb-4">
+          <!-- Card Header - Dropdown -->
+          <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-dark">Productos con menor stock (Grafico)</h6>
+          </div>
+          <!-- Card Body -->
+          <div class="card-body">
+            <div class="chart-pie pt-6" >
+              <canvas id="line-products"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock contenido %}
+
+
+{% block pluginsjs %}
+
+  <script src="{% static 'lib/plugins/charts/chart.min.js' %}"></script>
+
+
+  <script>
+    /** NUMERO DE VENTAS **/
+    var ctx = document.getElementById("line-sale");
+    var myDonutChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [{% for c in count_sales.all %} "{{ c.month|date:"M-Y" }}", {% endfor %}],
+        datasets: [{
+            data: [{% for c in count_sales.all %} {{ c.cantidad|safe }}, {% endfor %}],
+            label: 'Ventas',
+            lineTension: 0.3,
+            backgroundColor: "rgba(93, 214, 153, 0.1)",
+            borderColor: "rgba(38, 189, 101, 1)",
+            pointRadius: 4,
+            pointBackgroundColor: "rgba(38, 189, 101, 1)",
+            pointBorderColor: "rgba(38, 189, 101, 1)",
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "rgba(36, 177, 95, 1)",
+            pointHoverBorderColor: "rgba(36, 177, 95, 1)",
+            pointHitRadius: 10,
+            pointBorderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        tooltips: {
+          backgroundColor: "rgb(255,255,255)",
+          bodyFontColor: "#090909",
+          borderColor: "#dddfeb",
+          bodyFontColor: "#858796",
+          titleFontColor: '#6e707e',
+          borderWidth: 1,
+          caretSize: 10,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            time: {
+              unit: 'month'
+            },
+            gridLines: {
+              display: false,
+              drawBorder: false
+            },
+            ticks: {
+              maxTicksLimit: 12,
+            },
+            maxBarThickness: 25,
+          }],
+          yAxes: [{
+            ticks: {
+              maxTicksLimit: 12,
+              padding: 10,
+            },
+          }],
+        },
+        cutoutPercentage: 50,
+        maintainAspectRatio: false,
+        responsive: true,
+        aspectRatio: 1,
+      },
+    });
+
+
+    /** NUMERO DE COMPRAS **/
+    var ctx2 = document.getElementById("line-buy");
+    var myDonutChart = new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: [{% for b in count_buys.all %} "{{ b.month|date:"M-Y" }}", {% endfor %}],
+        datasets: [
+          {
+            data: [{% for b in count_buys.all %} {{ b.cantidad|safe }}, {% endfor %}],
+            label: 'Compras',
+            lineTension: 0.3,
+            backgroundColor: "#FF937C",
+            borderColor: "#FF5733",
+            pointRadius: 4,
+            pointBackgroundColor: "#FF5733",
+            pointBorderColor: "#FF5733",
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "#FF8469",
+            pointHoverBorderColor: "#FF8469",
+            pointHitRadius: 10,
+            pointBorderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        tooltip: {
+          backgroundColor: "#FF8469",
+          bodyFontColor: "#FF8469",
+          borderColor: "#FF8469",
+          bodyFontColor: "#FF8469",
+          titleFontColor: '#FF8469',
+          borderWidth: 1,
+          caretSize: 10,
+          xPadding: 15,
+          yPadding: 15,
+          displayColors: false,
+          caretPadding: 10,
+        },
+        legend: {
+          display: true
+        },
+        scales: {
+          xAxes: [{
+            time: {
+              unit: 'month'
+            },
+            gridLines: {
+              display: false,
+              drawBorder: false
+            },
+            ticks: {
+              maxTicksLimit: 12,
+            },
+            maxBarThickness: 25,
+          }],
+          yAxes: [{
+            ticks: {
+              maxTicksLimit: 12,
+              padding: 10,
+            },
+          }],
+        },
+        cutoutPercentage: 50,
+        maintainAspectRatio: false,
+        responsive: true,
+        aspectRatio: 1,
+      },
+    });
+    /** GANANCIAS MENSUALES **/
+    var ctx3 = document.getElementById("line-profit");
+    var myDonutChart = new Chart(ctx3, {
+      type: "line",
+      data: {
+        labels: [{% for p in count_profit.all %} "{{ p.month|date:"M-Y" }}", {% endfor %}],
+        datasets: [
+          {
+            data: [{% for p in count_profit.all %} {{ p.profit|safe }}, {% endfor %}],
+            label: 'Ganancias',
+            lineTension: 0.3,
+            backgroundColor: "#FFE07C",
+            borderColor: "#FFC300",
+            pointRadius: 4,
+            pointBackgroundColor: "#FFC300",
+            pointBorderColor: "#FFC300",
+            pointHoverRadius: 5,
+            pointHoverBackgroundColor: "FFC300",
+            pointHoverBorderColor: "#FFC300",
+            pointHitRadius: 10,
+            pointBorderWidth: 3,
+          },
+        ],
+      },
+      options: {
+        scales: {
+            y: {
+                ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function(value, index, values) {
+                        return '$' + value;
+                    }
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+              backgroundColor: "#303030",
+              bodyFontColor: "#303030",
+              borderColor: "#303030",
+              bodyFontColor: "#303030",
+              titleFontColor: '#303030',
+              borderWidth: 1,
+              caretSize: 10,
+              xPadding: 15,
+              yPadding: 15,
+              displayColors: false,
+              caretPadding: 10,
+              callbacks: {
+                label: data => `$ ${data.formattedValue}`
+              }
+          },
+        },
+        legend: {
+          display: true
+        },
+        cutoutPercentage: 50,
+        maintainAspectRatio: false,
+        responsive: true,
+        aspectRatio: 1,
+      },
+    });
+
+  // PRODUCTOS CON MENOR STOCK
+  var ctx = document.getElementById("line-products");
+  var myDonutChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+      labels: [{% for prod in count_products.all %} "{{ prod.name }}", {% endfor %}],
+      datasets: [{
+        data: [{% for prod in count_products.all %} {{ prod.stock|safe }}, {% endfor %}],
+        backgroundColor: ['#17cf92', '#e47452', '#fbc560', '#3683ff', '#b80099', '#a50000', '#1ad439', '#26d5ec'],
+        hoverBackgroundColor: ['#17cf92', '#e47452', '#fbc560', '#3683ff', '#b80099', '#a50000', '#1ad439', '#26d5ec'],
+        hoverBorderColor: "rgba(234, 236, 244, 1)",
+      }],
+    },
+    options: {
+      tooltips: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 15,
+        yPadding: 15,
+        displayColors: false,
+        caretPadding: 10,
+      },
+      legend: {
+        display: false
+      },
+      cutoutPercentage: 50,
+      maintainAspectRatio: false,
+      responsive: true
+    },
+  });
+
+  </script>
+{% endblock pluginsjs %}
+

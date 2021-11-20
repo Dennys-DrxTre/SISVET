@@ -14,7 +14,7 @@
         <th scope="col" style="width: 5%;">id</th>
         <th scope="col" style="width: 10%;">Nombre</th>
         <th scope="col" style="width: 10%;">Nacimiento</th>
-        <th scope="col" style="width: 10%;">Genero</th>
+        <th scope="col" style="width: 10%;">Sexo</th>
         <th scope="col" style="width: 5%;">Peso</th>
         <th scope="col" style="width: 8%;">Especie</th>
         <th scope="col" style="width: 10%;">Suplente</th>
@@ -53,7 +53,7 @@
                       </div>
                       <div class="col">
                         <label for="id_name">Nombre <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.name|add_class:'form-control'|attr:'name:name'|attr:'placeholder:Introduzca el Nombre'|attr:'autocomplete:off'|attr:'maxlength:100' }}
+                        {{ form.name|add_class:'form-control'|attr:'name:name'|attr:'placeholder:Introduzca el Nombre'|attr:'autocomplete:off'|attr:'maxlength:50'|attr:'pattern:[a-zA-Z ]+$' }}
                       </div>
 
 
@@ -85,12 +85,12 @@
 
                       <div class="col">
                         <label for="id_race">Raza <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.race|add_class:'form-control'|attr:'name:race'|attr:'placeholder:Raza'}}
+                        {{ form.race|add_class:'form-control'|attr:'name:race'|attr:'placeholder:Raza'|attr:'pattern:[a-zA-Z ]+$'|attr:'maxlength:30'}}
                       </div>
 
                       <div class="col">
                         <label for="id_substitute">Suplente</label>
-                        {{ form.substitute|add_class:'form-control'|attr:'name:substitute'|attr:'placeholder:Introduzca el Suplente'|attr:'autocomplete:off'|attr:'maxlength:100' }}
+                        {{ form.substitute|add_class:'form-control'|attr:'name:substitute'|attr:'placeholder:Introduzca el Suplente'|attr:'autocomplete:off'|attr:'maxlength:50'|attr:'pattern:[a-zA-Z ]+$' }}
                       </div>
 
                     </div>

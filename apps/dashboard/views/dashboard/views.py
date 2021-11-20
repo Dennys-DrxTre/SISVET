@@ -31,7 +31,14 @@ class DashboardView(LoginRequiredMixin, TemplateView):
         count_provider = Provider.objects.all()
         count_pet = Pet.objects.all()
 
+        # GANANCIA TOTAL
         sum_profit = Detail_BS.objects.filter(buy_sale__type_bs='Venta').aggregate(Sum('profit'))
+
+        # LISTADO DE MODULOS [5]
+        list_clients = Client.objects.all().order_by('-id')[0:5]
+        list_pets = Pet.objects.all().order_by('-id')[0:5]
+        list_buys = Buy_Sale.objects.filter(type_bs='Compra').order_by('-date')[0:5]
+        list_sales = Buy_Sale.objects.filter(type_bs='Venta').order_by('-date')[0:5]
 
         context = {
             'count_sale': count_sale,
@@ -40,6 +47,69 @@ class DashboardView(LoginRequiredMixin, TemplateView):
             'count_provider': count_provider,
             'count_pet': count_pet,
             'sum_profit': sum_profit['profit__sum'],
+            'list_clients': list_clients,
+            'list_pets': list_pets,
+            'list_buys': list_buys,
+            'list_sales': list_sales,
+
+        }
+
+        return render(request, self.template_name, context)
+
+class ChartsView(LoginRequiredMixin, TemplateView):
+    template_name = 'dashboard/charts.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        perm = ('entity.view_clientuser',)
+        if request.user.has_perms(perm):
+            return HttpResponseRedirect(reverse_lazy('usersys:clientuser'))
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get (self, request,*args, **kwargs):
+
+        # NUMERO DE VENTAS
+        count_sales = Buy_Sale.objects.filter(type_bs='Venta').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()
+        if len(count_sales) < (12):
+            count_sales = Buy_Sale.objects.filter(type_bs='Venta').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()
+        else:
+            month_sale = len(count_sales) - int(12)
+            count_sales = Buy_Sale.objects.filter(type_bs='Venta').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()[month_sale:]
+
+        # NUMERO DE COMPRAS
+        count_buys = Buy_Sale.objects.filter(type_bs='Compra').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()
+        if len(count_buys) < (12):
+            count_buys = Buy_Sale.objects.filter(type_bs='Compra').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()
+        else:
+            month_buy = len(count_buys) - int(12)
+            count_buys = Buy_Sale.objects.filter(type_bs='Compra').annotate(month=TruncMonth('date')).values('month').annotate(cantidad=Count('id')).order_by()[month_buy:]
+
+        # GANANCIAS MENSUALES
+        count_profit = Detail_BS.objects.filter(buy_sale__type_bs='Venta').annotate(month=TruncMonth('buy_sale__date')).values('month').annotate(profit=Sum('profit')).order_by()
+        if len(count_profit) < (12):
+            count_profit = Detail_BS.objects.filter(buy_sale__type_bs='Venta').annotate(month=TruncMonth('buy_sale__date')).values('month').annotate(profit=Sum('profit')).order_by()
+        else:
+            month_profit = len(count_profit) - int(12)
+            count_profit = Detail_BS.objects.filter(buy_sale__type_bs='Venta').annotate(month=TruncMonth('buy_sale__date')).values('month').annotate(profit=Sum('profit')).order_by()[month_profit:]
+
+        # PRODUCTOS CON MENOR STOCK
+        count_products = Product.objects.all().order_by('stock')[:8]
+
+        # TOTAL DE VENTA, COMPRAS Y GANANCIAS POR MES ACTUAL
+        profit_month = Detail_BS.objects.filter(buy_sale__type_bs='Venta').annotate(month=TruncMonth('buy_sale__date')).values('month').annotate(ganancias=Sum('profit')).order_by()
+        profit_month_b = Buy_Sale.objects.filter(type_bs='Compra').annotate(month=TruncMonth('date')).values('month').annotate(ganancias=Sum('total')).order_by()
+        profit_month_s = Buy_Sale.objects.filter(type_bs='Venta').annotate(month=TruncMonth('date')).values('month').annotate(ganancias=Sum('total')).order_by()
+
+
+        context = {
+
+            'count_sales': count_sales,
+            'count_buys': count_buys,
+            'count_profit': count_profit,
+            'count_products': count_products,
+            'profit_month': profit_month,
+            'profit_month_s': profit_month_s,
+            'profit_month_b': profit_month_b,
 
         }
 

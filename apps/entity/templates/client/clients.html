@@ -50,7 +50,7 @@
                       </div>
                       <div class="col-5">
                         <label for="id_dni">Cedula <span class="text-danger" title="Campo Obligatorio">*</span></label>
-                        {{ form.dni|add_class:'form-control'|attr:'name:dni'|attr:'placeholder:Cedula'|attr:'autocomplete:off'|attr:'maxlength:8'}}
+                        {{ form.dni|add_class:'form-control'|attr:'name:dni'|attr:'placeholder:Cedula'|attr:'autocomplete:off'|attr:'maxlength:8'|attr:'pattern:[0-9]+'}}
                       </div>
                       <div class="col-4">
                         <label for="id_gender">Genero <span class="text-danger" title="Campo Obligatorio">*</span></label>
@@ -95,11 +95,11 @@
 
                       <div class="col-6">
                         <label for="id_mobile">Movil</label>
-                        {{ form.mobile|add_class:'form-control'|attr:'name:mobile'|attr:'placeholder:Numero Movil'|attr:'autocomplete:off'|attr:'maxlength:11'}}
+                        {{ form.mobile|add_class:'form-control'|attr:'name:mobile'|attr:'placeholder:Numero Movil'|attr:'autocomplete:off'|attr:'maxlength:11'|attr:'pattern:[0-9]+'}}
                       </div>
                       <div class="col-6">
                         <label for="id_tlf">Telefono Fijo</label>
-                        {{ form.tlf|add_class:'form-control'|attr:'name:tlf'|attr:'placeholder:Numero Fijo'|attr:'autocomplete:off'|attr:'maxlength:11'}}
+                        {{ form.tlf|add_class:'form-control'|attr:'name:tlf'|attr:'placeholder:Numero Fijo'|attr:'autocomplete:off'|attr:'maxlength:11'|attr:'pattern:[0-9]+'}}
                       </div>
 
                     </div>
