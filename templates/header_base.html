@@ -108,21 +108,27 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'health:consultations' %}" class="nav-link">
+              <a href="{% url 'health:consultas' %}" class="nav-link">
                 <i class="fas fa-comment-medical nav-icon"></i>
                 <p>Consulta</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
+              <a href="{% url 'health:vacunas' %}" class="nav-link">
                 <i class="fas fa-syringe nav-icon"></i>
                 <p>Vacunacion</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
+              <a href="{% url 'health:desparacitacion' %}" class="nav-link">
                 <i class="fas fa-bug nav-icon"></i>
                 <p>Desparasitacion</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'health:vaccinedays' %}" class="nav-link">
+                <i class="fas fa-briefcase-medical nav-icon"></i>
+                <p>Jornada de Vacunación</p>
               </a>
             </li>
 
@@ -179,29 +185,18 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="../../index.html" class="nav-link">
+              <a href="{% url 'reports:menu_health' %}" class="nav-link">
                 <i class="far fa-file-pdf nav-icon"></i>
-                <p>Clientes</p>
+                <p>Seccion Medica</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
+              <a href="{% url 'reports:menu_cashier' %}" class="nav-link">
                 <i class="far fa-file-pdf nav-icon"></i>
-                <p>Mascotas</p>
+                <p>Seccion Movimientos</p>
               </a>
             </li>
-            <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
-                <i class="far fa-file-pdf nav-icon"></i>
-                <p>Productos</p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="../../index2.html" class="nav-link">
-                <i class="far fa-file-pdf nav-icon"></i>
-                <p>Ventas</p>
-              </a>
-            </li>
+            
           </ul>
         </li>
 

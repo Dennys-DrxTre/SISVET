@@ -25,6 +25,7 @@ urlpatterns = [
     path('inventory/', include('apps.cashier.urls')),
     path('auth/', include('apps.usersys.urls')),
     path('', include('apps.dashboard.urls')),
+    path('',include('apps.reports.urls')),
 
 ]
 

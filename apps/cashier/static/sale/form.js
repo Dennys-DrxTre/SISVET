@@ -203,7 +203,6 @@ $(function () {
                     action: "search_products",
                     ids: JSON.stringify(vents.get_ids())
                 }
-
                 return queryParameters;
             },
             processResults: function (data) {

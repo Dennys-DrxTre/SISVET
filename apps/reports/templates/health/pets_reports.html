@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 3rem;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .cosa{
+        width: 100%;
+        margin: 10px;
+        border-top: black;
+    }
+
+    #invoice tbody tr td {
+        text-align: left;
+        border-bottom: 1px solid rgb(183, 183, 183);
+        padding-top: 4px;
+    }
+
+</style>
+<body>
+<p class="head">
+    SISVET
+</p>
+<p>
+    <b>FECHA DEL REPORTE:  {{ today|date:"d-m-Y" }}</b> <br>
+    <b>Reporte de todas las mascotas</b> <br>
+</p>
+<table id="invoice">
+    <thead>
+        <tr>
+            <th class="cosa">Mascota</th>
+            <th class="cosa">Cliente</th>
+            <th class="cosa">Fecha Nac.</th>
+            <th class="cosa">Especie</th>
+            <th class="cosa">Raza</th>
+            <th class="cosa">Peso</th>
+            <th class="cosa">Genero </th>
+            <th class="cosa">Sustituto</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in obj %}
+        <tr>
+            <td class="cosa">{{ x.name }}</td>
+            <td class="cosa">{{ x.client }}</td>
+            <td class="cosa">{{ x.date_nac|date:"d-m-Y" }}</td>
+            <td class="cosa">{{ x.specie }}</td>
+            <td class="cosa">{{ x.race }}</td>
+            <td class="cosa">{{ x.weight }}</td>
+            <td class="cosa">{{ x.gender }}</td>
+            {% if x.substitute  %}
+                <td class="cosa">{{ x.substitute }}</td>
+            {% else %}
+                <td class="cosa"><p>NO APLICA</p></td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

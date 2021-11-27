@@ -1,0 +1,109 @@
+{% extends "list.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head_list %}
+  <script src="{% static 'vaccine/list.js' %}"> </script>
+{% endblock %}
+ 
+{% block add_element %}
+<a href="{% url 'health:add_vaccineday' %}" class="btn btn-colores"><i class="fas fa-plus-square"></i></a>
+{% endblock add_element %}
+ 
+{% block t_body %}
+    <tr>
+        <th scope="col" style="width: 10%;">Id</th>
+        <th scope="col" style="width: 15%;">Descripción</th>
+        <th scope="col" style="width: 15%;">Fecha</th>
+        <th scope="col" style="width: 10%;">Producto</th>
+        <th scope="col" style="width: 20%;">Opciones</th>
+    </tr>
+{% endblock t_body %}
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="Modal_Detail" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-success card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/bone.png' %}" alt="User profile picture">
+                </div>
+                <br>
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b><i class="fas fa-barcode mr-1"></i> Id</b> <a id="detail-id" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-stream mr-1"></i> Descripción</b> <a id="detail-description" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-prescription-bottle mr-1"></i> Producto</b> <a id="detail-product" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-check mr-1"></i> Dosis por mascota</b><a id="detail-quantity_pet" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-check-double mr-1"></i> Dosis Total</b> <a id="detail-quantity_usage" class="float-right"></a>
+                  </li>
+                </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+           
+          </div>
+
+        <div class="col">
+          <!-- About Me Box -->
+          <div class="card card-success">
+            <div class="card-header">
+              <h3 id="detail-name2" class="card-title">Detalle de las mascotas</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover responsive" id="data2" cellspacing="0" width="100%">
+                  <thead>
+                    <tr>
+                      <th>id</th>
+                      <th>Mascota</th>
+                      <th>Especie</th>
+                      <th>Dosis Aplicada</th>
+                      <th>Dueño</th>
+                    </tr>
+                  </thead>
+                </table>
+              </div>
+        
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+
+         
+          
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+{% endblock modal %}

@@ -8,16 +8,17 @@ from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-from datetime import datetime
+from datetime import datetime, date, time, timedelta
+from django.contrib.auth.models import User, Permission
 
-from apps.health.forms import ConsultForm
+from apps.health.forms import ConsultaForm
 from apps.health.models import Consultation
-
+from apps.entity.models import Pet
 from apps.entity.mixins import Perms_Check
 
-# CRUD PETS URL
-class ConsultViews(Perms_Check, TemplateView):
-    template_name = 'consultation/consultations.html'
+# CRUD CLIENTS URL
+class ConsultaViews(Perms_Check, TemplateView):
+    template_name = 'consultas/consultas.html'
     permission_required = 'health.view_consultation'
 
     @method_decorator(csrf_exempt)
@@ -31,13 +32,13 @@ class ConsultViews(Perms_Check, TemplateView):
             action = request.POST['action']
             if action == 'searchdata':
                 data = []
-                for i in Consultation.objects.filter(status = True ):
+                for i in Consultation.objects.all():
                     if i.status == True:
                         i.status = '<span class="badge badge-success btn-colores">Activado</span>'
                     else:
                         i.status = '<span class="badge badge-dark">Desactivado</span>'
                     data.append(i.toJSON())
-
+            
             elif action == 'add':
                 perms = ('health.add_consultation',)
                 if request.user.has_perms(perms):
@@ -46,61 +47,56 @@ class ConsultViews(Perms_Check, TemplateView):
                     consul.symptom = request.POST.get('symptom')
                     consul.temperature = request.POST.get('temperature')
                     consul.total = request.POST.get('total')
+                    consul.date_c = request.POST.get('date_c')
+                    consul.date_u = request.POST.get('date_u')
+                    consul.date_u  = datetime.strptime(consul.date_c, '%Y-%m-%d') + timedelta(days = 30)
                     consul.diag_pre = request.POST.get('diag_pre')
                     consul.diag_def = request.POST.get('diag_def')
                     consul.fre_car = request.POST.get('fre_car')
                     consul.fre_res = request.POST.get('fre_res')
                     consul.examination = request.POST.get('examination')
-                    consul.pet = request.POST.get('pet')
+                    consul.pet = Pet.objects.get(pk = request.POST.get('pet'))
+                    consul.status = 'status' in request.POST
                     consul.save()
+                    
                 else:
-                    data['error'] = 'No tiene permisos para registrar una Consulta'
-
+                    data['error'] = 'No tiene permisos para registrar una consulta'
+            
             elif action == 'edit':
-                perms = ('cashier.change_product',)
+                perms = ('health.change_consultation',)
                 if request.user.has_perms(perms):
-                    pro = Consultation.objects.get(pk=request.POST['id'])
-                    pro.name = request.POST.get('name')
-                    pro.stock = request.POST.get('stock')
-                    pro.price_buy = request.POST.get('price_buy')
-                    pro.price_sale = request.POST.get('price_sale')
-                    pro.date_conquered = request.POST.get('date_conquered')
-                    pro.profit = request.POST.get('profit')
-                    pro.num_sales = request.POST.get('num_sales')
-                    pro.type_stock = request.POST.get('type_stock')
-                    pro.quantity = request.POST.get('quantity')
-                    pro.status = 'status' in request.POST
-                    pro.save()
+                    consul = Consultation.objects.get(pk=request.POST['id'])
+                    consul.motive = request.POST.get('motive')
+                    consul.symptom = request.POST.get('symptom')
+                    consul.temperature = request.POST.get('temperature')
+                    consul.total = request.POST.get('total')
+                    consul.date_c = request.POST.get('date_c')
+                    consul.date_u = request.POST.get('date_u')
+                    consul.diag_pre = request.POST.get('diag_pre')
+                    consul.diag_def = request.POST.get('diag_def')
+                    consul.fre_car = request.POST.get('fre_car')
+                    consul.fre_res = request.POST.get('fre_res')
+                    consul.examination = request.POST.get('examination')
+                    consul.pet = Pet.objects.get(pk=request.POST.get('pet'))
+                    consul.status = 'status' in request.POST
+                    consul.save()
+
                 else:
-                    data['error'] = 'No tiene permisos para editar una mascota'      
+                    data['error'] = 'No tiene permisos para editar una consulta'      
 
             elif action == 'delete':
-                perms = ('cashier.delete_product',)
+                perms = ('health.delete_consultation',)
                 if request.user.has_perms(perms):
-                    pro = Consultation.objects.get(pk=request.POST['id'])            
-                    pro.delete()
+                    consul = Consultation.objects.get(pk=request.POST['id'])            
+                    consul.delete()
                 else:
-                    data['error'] = 'No tiene permisos para eliminar una mascota'
-            
-            elif action == 'btn-estado':
-                perms = ('cashier.change_product',)
-                if request.user.has_perms(perms):
-                    pro = Consultation.objects.get(pk=request.POST['id'])
-                    if pro.status:
-                        pro.status = False
-                        pro.save()
-                    else:
-                        pro.status = True
-                        pro.save()
-                else:
-                    data['error'] = 'No tiene permisos para editar una mascota'  
+                    data['error'] = 'No tiene permisos para eliminar una consulta'
 
             else:
                 data['error'] = 'Ha ocurrido un error'           
 
         except Exception as e:
             data['error'] = str(e)
-            print(data)
         return JsonResponse(data, safe=False)
 
     def get_context_data(self, **kwargs):
@@ -108,6 +104,6 @@ class ConsultViews(Perms_Check, TemplateView):
         context['titulo'] = 'SISVET | Listado de Consultas'
         context['sub_titulo'] = 'Listado de Consultas'
         context['navegacion'] = 'Consultas'
-        context['form'] = ConsultForm()
-        context['list_url'] = reverse_lazy('health:consultations')
+        context['form'] = ConsultaForm()
+        context['list_url'] = reverse_lazy('health:consultas')
         return context

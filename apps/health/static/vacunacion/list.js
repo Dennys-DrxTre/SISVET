@@ -3,7 +3,7 @@ var tblCate;
 var modal_title;
 var messages;
 
-/** TABLE CLIENT */
+/** TABLE VACUNACION */
 function getData() {
     tblCate = $('#data').DataTable({
         responsive: true,
@@ -16,7 +16,7 @@ function getData() {
             "sZeroRecords": "No se encontraron resultados",
             "sEmptyTable": "Ningún dato disponible en esta tabla",
             "sInfo": "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty": "Mostrando del 0 al 0 de un total de 0 registros",
+            "sInfoEmpty": "Mostrand del 0 al 0 de un total de 0 registros",
             "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
             "sInfoPostFix": "",
             "sSearch": "Buscar:",
@@ -43,13 +43,14 @@ function getData() {
             dataSrc: ""
         },
         columns: [
-            {"data": "id"},
             {"data": "pet.name"},
-            {"data": "date_u"},
-            {"data": "next_visit"},
-            {"data": "motive"},
-            {"data": "symptom"},
-            {"data": "id"}
+            {"data": "pet.client"},
+            {"data": "name"},
+            {"data": "description"},
+            {"data": "date"},
+            {"data": "total"},
+            {"data": "status"},
+            {"data": "status"}
         ],
         columnDefs: [
             {
@@ -58,9 +59,8 @@ function getData() {
                 orderable: false,
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
-                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-file-contract"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
-                   
+                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';                   
                     return buttons;
                 }
             },
@@ -75,65 +75,50 @@ $(function () {
 
     modal_title = $('.modal-header');
     getData();
-    /** DETAIL CLIENT */
+    /** DETAIL VACUNACION */
     $('#data tbody').on('click', 'a[rel="detail"]', function () {
         
-        modal_title.find('h4').html('Detalle del Cliente');
+        modal_title.find('h4').html('Detalle de la Vacunacion');
         var tr = tblCate.cell($(this).closest('td, li')).index();
         var data = tblCate.row(tr.row).data();
         id = document.querySelector('#detail-id').textContent = data.id;
-        dni = document.querySelector('#detail-dni').textContent = data.type_name + data.dni;
-        name_pro = document.querySelector('#detail-name_pro').textContent = data.first_name;
-        gender = document.querySelector('#detail-gender').textContent = data.gender;
-        if (gender == 'Femenino'){
-            img = document.querySelector('#detail-img').setAttribute("src","/static/img/avatar2.png");
-        }else{
-            img = document.querySelector('#detail-img').setAttribute("src","/static/img/avatar5.png");
-        } 
-        mobile = document.querySelector('#detail-mobile').textContent = data.mobile;
-        tlf = document.querySelector('#detail-tlf').textContent = data.tlf;
-        name_com = document.querySelector('#detail-name_com').textContent = data.first_name + ' ' + data.last_name;
-        address = document.querySelector('#detail-address').textContent = data.address;
-        Email = document.querySelector('#detail-Email').textContent = data.Email;
-        if (data.status == '<span class="badge badge-success btn-colores">Activado</span>') {
-            input = document.querySelector('#status-btn').setAttribute('class','btn btn-colores');
-            
-        }else{
-            input = document.querySelector('#status-btn').setAttribute('class','btn btn-dark');
-        };
+        desparacitante = document.querySelector('#detail-client').textContent = data.name;
+        description = document.querySelector('#detail-substitute').textContent = data.description;
+        total = document.querySelector('#detail-name1').textContent = data.pet.name;
+        fecha = document.querySelector('#detail-gender').textContent = data.pet.gender; 
+        race = document.querySelector('#detail-race').textContent = data.pet.race;
+        specie = document.querySelector('#detail-specie').textContent = data.pet.specie;
+        diag_pre = document.querySelector('#detail-date_up').textContent = data.date;
+        Email = document.querySelector('#detail-diag_def').textContent = data.total;
+        new_date = document.querySelector('#detail-new_date').textContent = data.new_date;
         $('#Modal_Detail').modal('show');
 
-        /** DETAIL CLIENT EDIT */
+        /** DETAIL VACUNACION EDIT */
         $('#Modal_Detail').on('click', 'a[rel="edit"]', function () {
         
-            modal_title.find('h5').html('Editar Cliente');
-            $('form')[0].reset();
+            modal_title.find('h5').html('Editar Vacunacion');
+            $('form')[0].reset();        
             $('input[name="action"]').val('edit');
             $('input[name="id"]').val(data.id);
-            $('input[name="dni"]').val(data.dni);
-            $('select[name="gender"]').val(data.gender);
-            $('select[name="type_name"]').val(data.type_name);
-            $('input[name="first_name"]').val(data.first_name);
-            $('input[name="last_name"]').val(data.last_name);
-            $('input[name="address"]').val(data.address);
-            $('input[name="Email"]').val(data.Email);
-            $('select[name="co_mobile"]').val(data.co_mobile);
-            $('input[name="mobile"]').val(data.mobile);
-            $('input[name="tlf"]').val(data.tlf);
+            $('textarea[name="name"]').val(data.name);
+            $('textarea[name="description"]').val(data.description);
+            $('select[name="pet"]').val(data.pet.id);
+            select_tittle = document.querySelector('.select2-selection__rendered').innerHTML = data.pet.name;
+            $('input[name="total"]').val(data.total);
+            $('input[name="date"]').val(data.date);
             if (data.status == '<span class="badge badge-success btn-colores">Activado</span>') {
                 input = document.querySelector('.status').setAttribute('checked','checked');
                 
             }else{
                 input = document.querySelector('.status').removeAttribute('checked','checked');
             };
-
             $('#Modal_Detail').modal('hide');
             $('#ModalNew').modal('show');
         });
 
     });  
 
-    /** DETAIL CLIENT DELETE */
+    /** DETAIL VACUNACION DELETE */
     $('#Modal_Detail').on('click', 'a[rel="delete"]', function () {
         id = document.querySelector('#detail-id').textContent;
         var parameters = new FormData();
@@ -149,51 +134,31 @@ $(function () {
         });
         $('#Modal_Detail').modal('hide');
     });  
-    
-    /** DETAIL CLIENT STATUS */
-    $('#Modal_Detail').on('click', 'a[rel="btn-estado"]', function () {
-        
-        id = document.querySelector('#detail-id').textContent;
-        $('#Modal_Detail').modal('hide');
-        var parameters = new FormData();
-        parameters.append('action', 'btn-estado')
-        parameters.append('id', id)
-        submit_with_ajax(window.location.pathname,'Notifiación', '¿Estas seguro de cambiar el estado de este registro?', parameters, function () {
-            
-            tblCate.ajax.reload();
-            toastr.success('El estado se ha actualizado correctamente');
 
-        });
-    });
-
-    /** ADD CLIENT */
+    /** ADD VACUNACION */
     $('.btn-add').on('click', function () {
         $('input[name="action"]').val('add')
-        modal_title.find('h5').html('Registrar Consulta')
+        modal_title.find('h5').html('Registrar Vacunacion')
         $('form')[0].reset();
         $('#ModalNew').modal('show');
- 
 
     });
 
-    /** EDIT CLIENT */
+    /** EDIT VACUNACION */
     $('#data tbody').on('click', 'a[rel="edit"]', function () {
         $('form')[0].reset();        
-        modal_title.find('h5').html('Editar Cliente');
+        modal_title.find('h5').html('Editar Vacunacion');
         var tr = tblCate.cell($(this).closest('td, li')).index();
         var data = tblCate.row(tr.row).data();
         $('input[name="action"]').val('edit');
         $('input[name="id"]').val(data.id);
-        $('input[name="dni"]').val(data.dni);
-        $('select[name="gender"]').val(data.gender);
-        $('select[name="type_name"]').val(data.type_name);
-        $('input[name="first_name"]').val(data.first_name);
-        $('input[name="last_name"]').val(data.last_name);
-        $('input[name="address"]').val(data.address);
-        $('input[name="Email"]').val(data.Email);
-        $('select[name="co_mobile"]').val(data.co_mobile);
-        $('input[name="mobile"]').val(data.mobile);
-        $('input[name="tlf"]').val(data.tlf);
+        $('textarea[name="name"]').val(data.name);
+        $('textarea[name="description"]').val(data.description);
+        $('select[name="pet"]').val(data.pet.id).trigger('change');
+        select_tittle = document.querySelector('.select2-selection__rendered').innerHTML = data.pet.name;
+        $('input[name="total"]').val(data.total);
+        $('input[name="date"]').val(data.date);
+        // $('input[name="substitute"]').val(data.substitute);
         if (data.status == '<span class="badge badge-success btn-colores">Activado</span>') {
             input = document.querySelector('.status').setAttribute('checked','checked');
             
@@ -203,7 +168,7 @@ $(function () {
         $('#ModalNew').modal('show');
     });
 
-    /** DELETE CLIENT */
+    /** DELETE VACUNACION */
     $('#data tbody').on('click', 'a[rel="delete"]', function () {
         
         var tr = tblCate.cell($(this).closest('td, li')).index();
@@ -216,23 +181,6 @@ $(function () {
             
             tblCate.ajax.reload();
             toastr.success('Se ha eliminado correctamente');
-            
-        });
-    });
-
-    /** STATUS CLIENT */
-    $('#data tbody').on('click', 'a[rel="btn-estado"]', function () {
-        
-        var tr = tblCate.cell($(this).closest('td, li')).index();
-        var data = tblCate.row(tr.row).data();
-        console.log(data)
-        var parameters = new FormData();
-        parameters.append('action', 'btn-estado')
-        parameters.append('id', data.id)
-        submit_with_ajax(window.location.pathname,'Notifiación', '¿Estas seguro de cambiar el estado de este registro?', parameters, function () {
-            
-            tblCate.ajax.reload();
-            toastr.success('El estado se ha actualizado correctamente');
             
         });
     });
@@ -262,8 +210,9 @@ $(function () {
     $('.select2').select2({
         theme: 'bootstrap4',
         language: 'es',
-        placeholder: 'Selecionar Cliente',
+        placeholder: 'Selecionar Mascota',
         allowClear: true
         
     });
 });
+

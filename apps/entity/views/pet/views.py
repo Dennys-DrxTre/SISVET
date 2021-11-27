@@ -12,6 +12,7 @@ from datetime import datetime
 
 from apps.entity.forms import PetForm
 from apps.entity.models import Pet, Client
+from apps.health.models import Consultation, Parasite, Vaccine
 
 from apps.entity.mixins import Perms_Check
 
@@ -111,3 +112,29 @@ class PetViews(Perms_Check, TemplateView):
         context['form'] = PetForm()
         context['list_url'] = reverse_lazy('entity:pets')
         return context
+
+
+def detail_pet(request, id):
+    template_name = 'pet/detail_pet.html'
+    context = {}
+
+    if id:
+        pet = Pet.objects.filter(pk = id).first()
+        consult = Consultation.objects.filter(pet_id = id).order_by('-id')[:15]
+        parasite = Parasite.objects.filter(pet_id = id).order_by('-id')[:15]
+        vaccine = Vaccine.objects.filter(pet_id = id).order_by('-id')[:15]
+
+        context = {
+            'pet': pet,
+            'consult': consult,
+            'parasite': parasite,
+            'vaccine': vaccine,
+        }
+
+    else:
+        context = {
+            'prod': 'No hay datos',
+            'stock': 'No hay datos'
+        }
+
+    return render(request, template_name, context)

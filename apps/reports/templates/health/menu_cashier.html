@@ -1,0 +1,236 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>SISVET | Menu Reportes</title>
+{% endblock tittle %}
+{% block pluginscss %}
+   <link rel="stylesheet" href="{% static 'lib/plugins/daterangepicker/daterangepicker.css' %}">
+{% endblock pluginscss %}
+
+{% block contenido %}
+
+<div class="content">
+    <h2 class="ml-2">Reportes Generales sección Movimientos</h2>
+<div class="row mt-4">
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-info">
+        <div class="inner">
+          <h4 class="text-center">Ventas</h4>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="{% url 'reports:report_ventas' %}" class="small-box-footer">Descargar <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h4 class="text-center">Compras</h4>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="{% url 'reports:report_compras' %}" class="small-box-footer">Descargar <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-lg-3 col-6">
+      <!-- small box -->
+      <div class="small-box bg-warning">
+        <div class="inner">
+          <h4 class="text-center">Productos</h4>
+        </div>
+        <div class="icon">
+          <i class="ion ion-bag"></i>
+        </div>
+        <a href="{% url 'reports:report_productos' %}" class="small-box-footer">Descargar <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+    <!-- ./col -->
+    <div class="col-md-6">
+      <div class="card card-primary">
+          <div class="card-header">
+              <h3 class="card-title">Reportes de ventas por rango de fecha</h3>
+          </div>
+          <div class="card-body">
+              <!-- Date -->
+              <div class="form-group">
+                  <label>Rango de Fecha:</label>
+                  <div class="input-group date" data-target-input="nearest">
+                      <input type="text" name="date1" id="date1" class="form-control pull-right">
+                      <div class="input-group-append" >
+                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+              <button type="submit"  id="btn-print" class="btn btn-primary">Generar</button>
+            </div>
+          <!-- /.card-body -->
+          
+      </div>
+      
+      <!-- /.card -->
+  </div>
+
+  <div class="col-md-6">
+    <div class="card card-success">
+        <div class="card-header">
+            <h3 class="card-title">Reportes de compras por rango de fecha</h3>
+        </div>
+        <div class="card-body">
+            <!-- Date -->
+            <div class="form-group">
+                <label>Rango de Fecha:</label>
+                <div class="input-group date" data-target-input="nearest">
+                    <input type="text" name="date2" id="date2" class="form-control pull-right">
+                    <div class="input-group-append" >
+                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit"  id="btn-print2" class="btn btn-primary">Generar</button>
+          </div>
+        <!-- /.card-body -->
+        
+    </div>
+    
+    <!-- /.card -->
+</div>
+</div>
+</div>
+{% endblock contenido %}
+{% block pluginsjs %}
+<script>
+
+    function Change() {
+        var input1 = document.getElementById('date1').value;
+        var input2 = document.getElementById('date2').value;
+
+        lista_fecha = input1.split(' ');
+        date1 = lista_fecha[0];
+        date2 = lista_fecha[2];
+        separador1 = date1.split('-');
+        separador2 = date2.split('-');
+        date1 = separador1[2] + '-' + separador1[1] + '-' + separador1[0];
+        date2 = separador2[2] + '-' + separador2[1] + '-' + separador2[0];
+
+        lista_fecha2 = input2.split(' ');
+        date3 = lista_fecha2[0];
+        date4 = lista_fecha2[2];
+        separador3 = date3.split('-');
+        separador4 = date4.split('-');
+        date3 = separador3[2] + '-' + separador3[1] + '-' + separador3[0];
+        date4 = separador4[2] + '-' + separador4[1] + '-' + separador4[0];
+
+        $("#btn-print").click(function (e){
+            e.preventDefault();
+            var f1, f2;
+            f1= date1;
+            f2= date2;
+            var url = "/reports_dinamic/venta/" + f1 + "/" + f2;
+            window.open(url);
+        });
+        $("#btn-print2").click(function (e){
+            e.preventDefault();
+            var f3, f4;
+            f3= date3;
+            f4= date4;
+            var url = "/reports_dinamic/compra/" + f3 + "/" + f4;
+            window.open(url);
+        });
+
+    }
+
+    $('#date1, #date2').change(function(){
+        Change();
+    });
+
+    $(document).ready(function () {
+
+        $('input[name="date1"]').daterangepicker({
+            "locale": {
+                "format": "DD-MM-YYYY",
+                "separator": " - ",
+                "applyLabel": "Aplicar",
+                "cancelLabel": "Cancelar",
+                "fromLabel": "De",
+                "toLabel": "a",
+                "customRangeLabel": "Custom",
+                "daysOfWeek": [
+                    "Do",
+                    "Lu",
+                    "Ma",
+                    "Mi",
+                    "Ju",
+                    "Vi",
+                    "Sa"
+                ],
+                "monthNames": [
+                    "Enero",
+                    "Febrero",
+                    "Marzo",
+                    "Abril",
+                    "Mayo",
+                    "Junio",
+                    "Julio",
+                    "Agosto",
+                    "Septiembre",
+                    "Octubre",
+                    "Noviembre",
+                    "Deciembre"
+                ],
+                "firstDay": 1
+            }
+        });
+    });
+    $(document).ready(function () {
+
+$('input[name="date2"]').daterangepicker({
+    "locale": {
+        "format": "DD-MM-YYYY",
+        "separator": " - ",
+        "applyLabel": "Aplicar",
+        "cancelLabel": "Cancelar",
+        "fromLabel": "De",
+        "toLabel": "a",
+        "customRangeLabel": "Custom",
+        "daysOfWeek": [
+            "Do",
+            "Lu",
+            "Ma",
+            "Mi",
+            "Ju",
+            "Vi",
+            "Sa"
+        ],
+        "monthNames": [
+            "Enero",
+            "Febrero",
+            "Marzo",
+            "Abril",
+            "Mayo",
+            "Junio",
+            "Julio",
+            "Agosto",
+            "Septiembre",
+            "Octubre",
+            "Noviembre",
+            "Deciembre"
+        ],
+        "firstDay": 1
+    }
+});
+});
+</script>
+
+<script src="{% static 'lib/plugins/moment/moment.min.js' %}"></script>
+<script src="{% static 'lib/plugins/daterangepicker/daterangepicker.js' %}"></script>
+{% endblock pluginsjs %}

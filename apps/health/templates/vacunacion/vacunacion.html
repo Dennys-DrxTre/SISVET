@@ -1,0 +1,199 @@
+{% extends "list.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block head_list %}
+  <script src="{% static 'vacunacion/list.js' %}"> </script>
+{% endblock %}
+ 
+{% block add_element %}
+<a href="#" class="btn btn-colores btn-add"><i class="fas fa-plus-square"></i></a>
+{% endblock add_element %}
+ 
+{% block t_body %}
+    <tr>
+        <th scope="col" >Mascota</th>
+        <th scope="col" >Cliente</th>
+        <th scope="col" >Desparacitante</th>
+        <th scope="col" >Descripcion</th>
+        <th scope="col" >Fecha</th>
+        <th scope="col" >Monto a Pagar</th>
+        <th scope="col" >Estado</th>
+        <th scope="col" >Opciones</th>
+    </tr>
+{% endblock t_body %}
+
+{% block modal %}
+<!-- Modal -->
+<div class="modal fade" id="ModalNew" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <form method="POST" action="">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="add" id="status">
+        <input type="hidden" name="id" id="id" value="0">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header color-nav">
+                <h5 class="modal-title" id="exampleModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="card-body">
+                    <div class="form-group">
+                        <div class="row">
+                        <div class="col">
+                            <label for="id_pet">Mascota <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                            {{ form.pet|add_class:'form-control'|attr:'name:pet'|add_class:'select2'|attr:'style:width:100%'}}
+                        </div>
+                        </div>
+                        <div class="row">
+                        <div class="col">
+                            <label for="id_name">Desparacitante <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                            {{ form.name|add_class:'form-control'|attr:'name:name'|attr:'placeholder:Desparacitante'|attr:'style:resize:none'|attr:'rows:3' }}
+                        </div>
+                        <div class="col">
+                            <label for="id_description">Descripcion <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                            {{ form.description|add_class:'form-control'|attr:'name:description'|attr:'style:resize:none'|attr:'rows:3'}}
+                        </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
+                                <label for="id_date">Fecha <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                                {{ form.date|add_class:'form-control'|attr:'name:date'|attr:'type:date'}}
+                            </div>
+                        <div class="col">
+                            <label for="id_total">Monto a Pagar <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                            {{ form.total|add_class:'form-control'|attr:'name:total'}}
+                        </div>
+                    <div class="custom-control custom-switch custom-switch-on-success custom-switch-off-white" style="display: none;">
+                        {{ form.status|add_class:'custom-control-input'|attr:'name:status'|add_class:'status'}}
+                        <label class="custom-control-label" for="id_status" >Estado <span class="text-danger" title="Campo Obligatorio">*</span></label>
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success btn-colores">Guardar</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        </div>
+  </form>
+</div>
+
+<div class="modal fade" id="Modal_Detail" style="display: none;" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-success card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/bone.png' %}" alt="User profile picture">
+                </div>
+  
+                <h3 id="detail-name1" class="profile-username text-center"></h3>
+    
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b><i class="fas fa-transgender mr-1"></i> Genero</b> <a id="detail-gender" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-dog mr-1"></i> Especie</b> <a id="detail-specie" class="float-right"></a>
+                  </li>
+                  <li class="list-group-item">
+                    <b><i class="fas fa-paw mr-1"></i> Raza</b> <a id="detail-race" class="float-right"></a>
+                  </li>
+                </ul>
+                <div class="justify-content-between">
+                  <div class="row">
+                    <div class="col">
+                      <a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a>
+                    </div>
+                    <div class="col">
+                      <a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                    </div>
+                </div>
+
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+  
+           
+          </div>
+          <div class="col">
+             <!-- About Me Box -->
+             <div class="card card-success">
+              <div class="card-header">
+                <h3 id="detail-name2" class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <strong><i class="fas fa-user mr-1 "></i> Vacuna</strong>
+  
+                <p class="text-muted" id='detail-client'>
+                </p>
+  
+                <hr>
+
+                <strong><i class="fas fa-users mr-1 "></i> Descripcion</strong>
+  
+                <p class="text-muted" id='detail-substitute'>
+                </p>
+  
+                <hr>
+                <strong><i class="fas fa-diagnoses mr-1"></i>Fecha</strong>
+  
+                <p id="detail-date_up" class="text-muted"></p>
+  
+                <hr>
+                <strong><i class="fas fa-diagnoses mr-1"></i>Proxima cita</strong>
+  
+                <p id="detail-new_date" class="text-muted"></p>
+  
+                <hr>
+  
+                <strong><i class="fas fa-calendar-check mr-1"></i> Monto a Pagar</strong>
+                <p id="detail-diag_def" class="text-muted"></p>
+
+                <p id="detail-weight" class="text-muted">
+                <p id="detail-id" hidden class="text-muted">
+
+                </p>
+                
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+{% endblock modal %}

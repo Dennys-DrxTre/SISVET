@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 3rem;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .cosa{
+        width: 100%;
+        margin: 10px;
+        border-top: black;
+    }
+
+    #invoice tbody tr td {
+        text-align: left;
+        border-bottom: 1px solid rgb(183, 183, 183);
+        padding-top: 4px;
+    }
+
+</style>
+<body>
+<p class="head">
+    SISVET
+</p>
+<p>
+    <b>FECHA DEL REPORTE:  {{ today|date:"d-m-Y" }}</b> <br>
+    <b>CONSULTAS POR RANGO DE FECHA:  Del {{ f1|date:"d-m-Y" }} hasta {{ f2|date:"d-m-Y" }}</b> <br>
+</p>
+<table id="invoice">
+    <thead>
+        <tr>
+            <th class="cosa">Mascota</th>
+            <th class="cosa">Motivo</th>
+            <th class="cosa">Sintomas</th>
+            <th class="cosa">Temperatura</th>
+            <th class="cosa">Fre. Res.</th>
+            <th class="cosa">Fre. Card.</th>
+            <th class="cosa">Examenes</th>
+            <th class="cosa">Diag. Def.</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in obj %}
+        <tr>
+            <td class="cosa">{{ x.pet.name }}</td>
+            <td class="cosa">{{ x.motive }}</td>
+            <td class="cosa">{{ x.symptom }}</td>
+            <td class="cosa">{{ x.temperature }}</td>
+            <td class="cosa">{{ x.fre_res }}</td>
+            <td class="cosa">{{ x.fre_car }}</td>
+            <td class="cosa">{{ x.examination }}</td>
+            <td class="cosa">{{ x.diag_def }}</td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

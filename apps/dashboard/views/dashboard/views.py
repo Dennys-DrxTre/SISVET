@@ -11,6 +11,7 @@ from django.utils.dateparse import parse_date
 
 from apps.entity.models import Pet, Client, Provider
 from apps.cashier.models import Product, Buy_Sale, Detail_BS, ChildProduct
+from apps.health.models import Consultation, Parasite, Vaccine
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/dashboard.html'
@@ -100,6 +101,11 @@ class ChartsView(LoginRequiredMixin, TemplateView):
         profit_month_b = Buy_Sale.objects.filter(type_bs='Compra').annotate(month=TruncMonth('date')).values('month').annotate(ganancias=Sum('total')).order_by()
         profit_month_s = Buy_Sale.objects.filter(type_bs='Venta').annotate(month=TruncMonth('date')).values('month').annotate(ganancias=Sum('total')).order_by()
 
+        # NUMERO DE CONSULTAS, DESPARASITACIONES Y VACUNACIONES
+        count_consult = Consultation.objects.all()
+        count_vaccine = Vaccine.objects.all()
+        count_parasite = Parasite.objects.all()
+
 
         context = {
 
@@ -110,7 +116,9 @@ class ChartsView(LoginRequiredMixin, TemplateView):
             'profit_month': profit_month,
             'profit_month_s': profit_month_s,
             'profit_month_b': profit_month_b,
-
+            'count_consult': count_consult,
+            'count_vaccine': count_vaccine,
+            'count_parasite': count_parasite,
         }
 
         return render(request, self.template_name, context)

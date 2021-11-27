@@ -12,7 +12,7 @@ from datetime import datetime
 from django.contrib.auth.models import User, Permission
 
 from apps.entity.forms import ClientForm
-from apps.entity.models import Client
+from apps.entity.models import Client, Pet
 
 from apps.entity.mixins import Perms_Check
 
@@ -82,7 +82,6 @@ class ClientViews(Perms_Check, TemplateView):
                     clien.status = 'status' in request.POST
                     clien.save()
 
-
                 else:
                     data['error'] = 'No tiene permisos para editar un cliente'      
 
@@ -93,7 +92,15 @@ class ClientViews(Perms_Check, TemplateView):
                     clien.delete()
                 else:
                     data['error'] = 'No tiene permisos para eliminar un cliente'
-            
+
+            elif action == 'detail':
+                data = []
+                for i in Pet.objects.filter(client_id=request.POST['id']):
+                    item = i.toJSON()
+                    item['date_nac'] = i.date_nac.strftime("%d-%m-%Y")
+                    data.append(item)
+
+
             elif action == 'btn-estado':
                 perms = ('entity.change_client',)
                 if request.user.has_perms(perms):

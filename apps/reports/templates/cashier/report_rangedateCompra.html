@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 3rem;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .cosa{
+        width: 100%;
+        margin: 10px;
+        border-top: black;
+    }
+
+    #invoice tbody tr td {
+        text-align: left;
+        border-bottom: 1px solid rgb(183, 183, 183);
+        padding-top: 4px;
+    }
+
+</style>
+<body>
+<p class="head">
+    SISVET
+</p>
+<p>
+    <b>FECHA DEL REPORTE:  {{ today|date:"d-m-Y" }}</b> <br>
+    <b>Reporte de todas las compras desde {{f1|date:"d-m-Y"}} hasta {{f2|date:"d-m-Y"}}</b> <br>
+</p>
+<table id="invoice">
+    <thead>
+        <tr>
+            <th class="cosa">Sub total</th>
+            <th class="cosa">IVA</th>
+            <th class="cosa">Total</th>
+            <th class="cosa">Proveedor</th>
+            <th class="cosa">Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in obj %}
+        <tr>
+            <td class="cosa">{{ x.sub_total }}$</td>
+            <td class="cosa">{{ x.iva }}$</td>
+            <td class="cosa">{{ x.total }}$</td>
+            <td class="cosa">{{ x.provider.name }}</td>
+            <td class="cosa">{{ x.date|date:"d-m-Y" }}</td>
+        </tr>
+    {% empty %}
+        <tr>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+            <td class="cosa">-----</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+</body>
+</html>

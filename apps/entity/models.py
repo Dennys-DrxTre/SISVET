@@ -15,8 +15,8 @@ class Estado(models.Model):
     status = models.BooleanField(default=True, verbose_name='Estado')
     urlsecret = models.SlugField(max_length=50, default=my_urlsecret , null=True , blank=True)
     next_visit = models.DateField(default=date.today, verbose_name='Proxima visita', null=True , blank=True)
+    status_notify = models.BooleanField(default=True, verbose_name='Notificador')
 
-    
     class Meta:
         abstract=True
 
@@ -33,7 +33,7 @@ class Client(Estado):
     fechaa = models.DateTimeField(auto_now_add=True, verbose_name="Fecha de edición")
 
     def __str__(self):
-        return (self.dni)
+        return (self.dni + ' : ' + self.first_name)
 
     def get_gender_display(self):
         if self.gender:

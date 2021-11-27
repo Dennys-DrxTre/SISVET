@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<style>
+    .head {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 3rem;
+    }
+
+    #invoice thead tr th {
+        text-align: left;
+        border-bottom: 1px solid black;
+        border-top: 1px solid black;
+        padding-top: 4px;
+    }
+
+    #invoice thead tr {
+        margin-bottom: 0;
+        padding-bottom: 0;
+    }
+
+    #invoice tbody tr {
+        padding: 0;
+    }
+
+    .cosa{
+        width: 100%;
+        margin: 10px;
+        border-top: black;
+    }
+
+    #invoice tbody tr td {
+        text-align: left;
+        border-bottom: 1px solid rgb(183, 183, 183);
+        padding-top: 4px;
+    }
+
+</style>
+<body>
+<p class="head">
+    SISVET
+</p>
+<p>
+    <b style="font-size: 20px;">Reporte de compra</b> <br>
+    <b>FECHA DEL REPORTE:  {{ today|date:"d-m-Y" }}</b>
+</p>
+{% for x in obj %}
+{% if forloop.counter <= 1 %}
+    <p>Proveedor: {{x.buy_sale.provider.name}} <br>
+    Fecha de la compra: {{x.buy_sale.date|date:"d-m-Y" }}</p>
+    {% endif %}
+{% endfor %}  
+<table id="invoice">
+    <thead>
+        <tr>
+            <th class="cosa">Producto</th>
+            <th class="cosa">Cantidad</th>
+            <th class="cosa">Precio U.</th>
+            <th class="cosa">Sub. Total</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for x in obj %}
+        <tr>
+            <td class="cosa">{{ x.product.product.name }}</td>
+            <td class="cosa">{{ x.stock }}</td>
+            <td class="cosa">{{ x.product.price_buy}}$</td>
+            <td class="cosa">{{ x.total}}$</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% for x in obj %}
+    {% if forloop.counter <= 1 %}
+        <p style="text-align:right"><b >IVA: {{x.buy_sale.iva}}$ </b></p>
+        <p style="text-align:right"><b >Total + IVA: {{x.buy_sale.total}}$</b></p>
+    {% endif %}
+{% endfor %}
+</body>
+</html>

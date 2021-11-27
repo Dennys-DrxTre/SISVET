@@ -31,14 +31,30 @@ gender_pet = (
 
 species_pet = (
     ('Gato','Gato'),
-    ('Perro','Perro')
+    ('Perro','Perro'),
+    ('oveja','oveja'),
+    ('cerdo','cerdo'),
+    ('vaca','vaca'),
+    ('cabra','cabra'),
+    ('toro','toro'),
+    ('gallo','gallo'),
+    ('gallina','gallina'),
+    ('alce','alce'),
+    ('burro','burro'),
 )
 
 unidad_product = (
-    ('cantidad','cantidad'),
-    ('tableta','tableta'),
-    ('cc','cc'),
-    ('litro','litro')
+    ('Litro(s)','Litro(s)'),
+    ('Unidad(es)','Unidad(es)'),
+    ('cm','cm'),
+    ('g','g'),
+    ('galon(es)','galon(es)'),
+    ('kg','kg'),
+    ('Libra(s)','Libra(s)'),
+    ('onza(s)','onza(s)'),
+    ('μg','μg'),
+    ('mg','mg'),
+    ('ml,','ml'),
 )
 
 type_sale_buy = (

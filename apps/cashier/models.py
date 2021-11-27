@@ -3,7 +3,7 @@ from CONFIG.settings import MEDIA_URL
 from datetime import datetime, date
 from django.forms import model_to_dict
 from apps.entity.choices import unidad_product, type_sale_buy
-from apps.entity.models import Client, Provider, Estado, my_urlsecret
+from apps.entity.models import Client, Provider, Estado, my_urlsecret, Pet
 from apps.health.models import Consultation, Vaccine, Parasite
 from django.db.models.signals import post_save
 from django.db.models import Sum
@@ -102,6 +102,44 @@ class Detail_BS(Estado):
         ordering = ['id']  
     
       
+class VaccineDay(Estado):
+    date = models.DateField(auto_now_add=False, verbose_name='Fecha Creacion')
+    description = models.TextField(max_length=100, blank=True, null=True, verbose_name='Descripción')
+    product = models.ForeignKey(ChildProduct, on_delete=models.CASCADE, verbose_name='Producto', null = True, blank=True)
+    quantity = models.FloatField(verbose_name='Cantidad de medidad', null = True, blank=True)
+    quantity_usage = models.IntegerField(verbose_name='Cantidad usada', null = True, blank=True)
+    quantity_pet =  models.IntegerField(verbose_name='Cantidad por mascota', null = True, blank=True)
+
+    def __str__(self):
+        return str(self.id)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        item['prod'] = {'id':self.product.id, 'name': self.product.product.name}
+        return item
+
+    class Meta:
+        verbose_name_plural = 'Jornada de Vacunacion'
+        verbose_name = 'Jornada de Vacunaciones'
+        ordering = ['id']  
+
+
+class Det_VaccineDay(Estado):
+    pet = models.ForeignKey(Pet, on_delete=models.CASCADE, verbose_name='Paciente')
+    quantity = models.FloatField(verbose_name='Cantidad de medidad', null = True, blank=True)
+    vaccineday = models.ForeignKey(VaccineDay, verbose_name='Jornada de vacunacion', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.id)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    class Meta:
+        verbose_name_plural = 'Detalle Jornada de Vacunacion'
+        verbose_name = 'Detalle Jornada de Vacunaciones'
+        ordering = ['id']
 
 def stock_product(sender, instance, **kwargs):                      
     cont = ChildProduct.objects.filter(product__name=instance.product.product.name).aggregate(Sum('stock'))
@@ -111,3 +149,11 @@ def stock_product(sender, instance, **kwargs):
 
 post_save.connect(stock_product, sender=Detail_BS)
 
+
+def stock_product2(sender, instance, **kwargs):                      
+    cont = ChildProduct.objects.filter(product__name=instance.product.product.name).aggregate(Sum('stock'))
+    prod_parent = Product.objects.get(pk = instance.product.product.id)
+    prod_parent.stock = cont['stock__sum'] 
+    prod_parent.save()
+
+post_save.connect(stock_product2, sender=VaccineDay)

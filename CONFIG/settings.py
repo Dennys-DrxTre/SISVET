@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'apps.cashier',
     'apps.dashboard',
     'apps.usersys',
+    'apps.reports',
     # ’widget_tweaks’
     'widget_tweaks',
 

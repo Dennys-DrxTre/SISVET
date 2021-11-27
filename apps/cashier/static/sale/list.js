@@ -59,7 +59,7 @@ function getData() {
                     var buttons = '<a href="/inventory/editar_venta/' + data + '/" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
-                   
+                    buttons += '<a href="#" rel="pdf" class="btn btn-dark"><i class="fas fa-file-pdf"></i></a> ';
                     return buttons;
                 }
             },
@@ -172,5 +172,16 @@ $(function () {
             toastr.success('Se ha eliminado correctamente');
             
         });
+    });
+});
+
+$(function () {
+    /** PDF SALE */
+    $('#data tbody').on('click', 'a[rel="pdf"]', function () {
+    
+        var tr = tblCate.cell($(this).closest('td, li')).index();
+        var data = tblCate.row(tr.row).data();
+        window.open("/reports/ventas/" + data.id)
+       
     });
 });

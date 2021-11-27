@@ -1,0 +1,338 @@
+{% load static %}
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h4 class="modal-title">Detalle de la mascota</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+        <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-success card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle" id="detail-img" src="{% static 'img/bone.png' %}" alt="User profile picture">
+                </div>
+
+                <h3 id="detail-name1" class="profile-username text-center">{{ pet.name }}</h3>
+    
+                <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b><i class="fas fa-transgender mr-1"></i> Genero</b> <a id="detail-gender" class="float-right">{{ pet.gender }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b><i class="fas fa-paw mr-1"></i> Raza</b> <a id="detail-race" class="float-right">{{ pet.race }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b><i class="fas fa-dog mr-1"></i> Especie</b> <a id="detail-specie" class="float-right">{{ pet.specie }}</a>
+                </li>
+                </ul>
+
+            </div>
+            <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+            
+        </div>
+        <div class="col">
+            <!-- About Me Box -->
+            <div class="card card-success">
+            <div class="card-header">
+                <h3 id="detail-name2" class="card-title">{{ pet.name }}</h3>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <strong><i class="fas fa-user mr-1 "></i> Propietario</strong>
+
+                <p class="text-muted" id='detail-client'>{{ pet.client }} ({{ pet.client.first_name }})
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-users mr-1 "></i> Suplente</strong>
+
+                <p class="text-muted" id='detail-substitute'>
+                {% if pet.substitute %}
+                    {{ pet.substitute }}
+                {% else %}
+                    No Aplica
+                {% endif %}
+                </p>
+
+                <hr>
+
+                <strong><i class="fas fa-calendar-alt mr-1"></i>Fecha de Nacimiento</strong>
+
+                <p id="detail-date_nac" class="text-muted">{{ pet.date_nac|date:'d-m-Y' }}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-calendar-check mr-1"></i>Ultima Visita</strong>
+
+                <p id="detail-date_up" class="text-muted">{{ pet.date_u|date:'d-m-Y' }}</p>
+
+                <hr>
+
+                <strong><i class="fas fa-weight mr-1"></i> Peso</strong>
+
+                <p id="detail-weight" class="text-muted">{{ pet.weight }}Kg</p>
+                <p id="detail-id" hidden class="text-muted"></p>
+                
+            </div>
+            <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+
+        
+        <div class="col">
+            <div class="card">
+            <div class="card-header d-flex p-0">
+                <h3 class="card-title p-3">Historial Medico</h3>
+                <ul class="nav nav-pills ml-auto p-2">
+                <li class="nav-item"><a class="nav-link active" href="#tab_1" data-toggle="tab">Consultas</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_2" data-toggle="tab">Vacunaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#tab_3" data-toggle="tab">Desparasitaciones</a></li>
+                </ul>
+            </div><!-- /.card-header -->
+            <div class="card-body">
+                <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 id="detail-name2" class="card-title">Consultas</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-striped table-hover responsive" id="data2" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Motivo</th>
+                                <th>Sintomas</th>
+                                <th>F. Consulta</th>
+                                <th>Examen</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for c in consult %}
+                                    <tr>
+                                        <td>{{ c.id }}</td>
+                                        <td>{{ c.motive }}</td>
+                                        <td>{{ c.symptom }}</td>
+                                        <td>{{ c.date_c|date:'d-m-Y' }}</td>
+                                        <td>{{ c.examination }}</td>
+                                        <td>${{ c.total }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_2">
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 id="detail-name2" class="card-title">Vacunaciones</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-striped table-hover responsive" id="data3" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>F. Vacunación</th>
+                                <th>Proxima Cita</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for v in vaccine %}
+                                    <tr>
+                                        <td>{{ v.id }}</td>
+                                        <td>{{ v.name }}</td>
+                                        <td>{{ v.description }}</td>
+                                        <td>{{ v.date|date:'d-m-Y' }}</td>
+                                        <td>{{ v.new_date|date:'d-m-Y' }}</td>
+                                        <td>${{ v.total }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                <div class="tab-pane" id="tab_3">
+                    <div class="card card-success">
+                    <div class="card-header">
+                        <h3 id="detail-name2" class="card-title">Desparasitaciones</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="table-responsive">
+                        <table class="table table-striped table-hover responsive" id="data4" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th>id</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>F. Vacunación</th>
+                                <th>Proxima Cita</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for p in parasite %}
+                                    <tr>
+                                        <td>{{ p.id }}</td>
+                                        <td>{{ p.name }}</td>
+                                        <td>{{ p.description }}</td>
+                                        <td>{{ p.date|date:'d-m-Y' }}</td>
+                                        <td>{{ p.new_date|date:'d-m-Y' }}</td>
+                                        <td>${{ p.total }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        </div>
+                
+                    </div>
+                    <!-- /.card-body -->
+                    </div>
+                </div>
+                <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+            </div><!-- /.card-body -->
+            </div>
+            <!-- About Me Box -->
+            <!-- /.card -->
+        </div>
+
+
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+    </div>
+    </div>
+    <!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+
+<script>
+    $('#data2').DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        ordering:  false,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class='fa fa-angle-double-left'></span>",
+                "sLast": "<span class='fa fa-angle-double-right'></span>",
+                "sNext": "<span class='fa fa-angle-right'></span>",
+                "sPrevious": "<span class='fa fa-angle-left'></span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+
+    $('#data3').DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        ordering:  false,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class='fa fa-angle-double-left'></span>",
+                "sLast": "<span class='fa fa-angle-double-right'></span>",
+                "sNext": "<span class='fa fa-angle-right'></span>",
+                "sPrevious": "<span class='fa fa-angle-left'></span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+
+    $('#data4').DataTable({
+        responsive: true,
+        autoWidth: false,
+        destroy: true,
+        deferRender: true,
+        ordering:  false,
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class='fa fa-angle-double-left'></span>",
+                "sLast": "<span class='fa fa-angle-double-right'></span>",
+                "sNext": "<span class='fa fa-angle-right'></span>",
+                "sPrevious": "<span class='fa fa-angle-left'></span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+    });
+</script>

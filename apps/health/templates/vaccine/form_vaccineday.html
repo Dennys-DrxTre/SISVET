@@ -1,0 +1,123 @@
+{% extends 'form.html' %} 
+{% load static %}
+{% load widget_tweaks %}
+{% block form %}
+<form action="post">
+    <div class="card">
+        <div class="card-body">
+    
+            <div class="row">
+
+                <div class="col-md-4">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Detalles de la Jornada de Vacunación</h3>
+                        </div>
+                        <div class="card-body">
+                            <input type="text" name="action" value="{{ action }}" hidden>
+    
+                            <div class="row">
+    
+                                <div class="form-group col">
+                                    <label for="exampleInputPassword1">Producto:</label>
+                                    {{ form.product|add_class:'form-control'|attr:'name:product'|add_class:'select22'|attr:'style:width:100%'|attr:'required'}}
+                                </div>
+
+ 
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="exampleInputPassword1">Fecha:</label>
+                                    {{ form.date|add_class:'form-control'|attr:'name:date'|attr:'placeholder:Fecha'|attr:'readonly:readonly'}}
+                                </div>
+        
+                            </div>
+
+                            <div class="row" id="rest">
+
+                                <div class="form-group col">
+                                    <label for="exampleInputPassword1">Dosis por mascota:</label>
+                                    <input type="number" class="form-control" name="quantity_pet" required placeholder="cantidad por mascota" id="quantity_pet">
+                                </div>
+
+                                <div class="form-group col">
+                                    <label for="exampleInputPassword1">Dosis del producto:</label>
+                                    {{ form.quantity|add_class:'form-control'|attr:'name:quantity'|attr:'placeholder:Cantidad'|attr:'type:number'|attr:'required'|attr:'id:quantity'}}
+                                </div>
+
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col">
+                                    <label for="date">Descripción:</label>
+                                    {{ form.description|add_class:'form-control'|attr:'name:description'|attr:'type:textarea'|attr:'placeholder:Descripción'|attr:'rows:5'|attr:'required'}}
+                                </div>
+                            </div>
+    
+    
+    
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Registrar Mascota</h3>
+                            <div class="card-tools">
+                                <a href="#" rel="btn_delete" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></a>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <div class="row">
+                                <label for="product">Buscador de Mascotas:</label>
+                                <div class="input-group">
+                                    <select class="form-control select2" name="search" style="width: 100%;"></select>
+                                  </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="card-body">
+    
+                            <table id="data2" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" style="width: 30%;">Mascota</th>
+                                        <th scope="col" style="width: 20%;">Dueño</th>
+                                        <th scope="col" style="width: 20%;">Especie</th>
+                                        <th scope="col" style="width: 20%;">Dosis</th>
+                                        <th scope="col" style="width: 10%;">Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-colores float-right ">Guardar</button>
+                        <button type="button" onclick="PagePrevious()" class="btn btn-danger float-right mr-2">Cancelar</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock form %}
+
+{% block script %} 
+    vents.items.pets = {{ det|safe }};
+    $('input[name="date"]').val({{ date|safe }});
+    vents.items.date = {{ date|safe }};
+    vents.list();
+{% endblock script %}
+
+{% block form.js %}
+    <script src="{% static 'vaccine/form.js' %}"> </script>
+{% endblock form.js %}

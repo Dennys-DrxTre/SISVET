@@ -87,7 +87,7 @@
           <div class="info-box-content">
             <span class="info-box-text">Consultas</span>
             <span class="info-box-number">
-              {% if count_provider %}{{count_provider|length}}{% else %}0{% endif %}
+              {% if count_consult %}{{count_consult|length}}{% else %}0{% endif %}
               <small>(registradas)</small>
             </span>
           </div>
@@ -103,7 +103,7 @@
           <div class="info-box-content">
             <span class="info-box-text">Vacunaciones</span>
             <span class="info-box-number">
-              {% if sum_profit %}{{sum_profit|floatformat:2}}${% else %}0{% endif %}
+              {% if count_vaccine %}{{count_vaccine|length}}{% else %}0{% endif %}
               <small>(registradas)</small>
             </span>
           </div>
@@ -119,7 +119,7 @@
           <div class="info-box-content">
             <span class="info-box-text">Desparitaciones</span>
             <span class="info-box-number">
-              {% if count_pet %}{{count_pet|length}}{% else %}0{% endif %}
+              {% if count_parasite %}{{count_parasite|length}}{% else %}0{% endif %}
               <small>(registradas)</small>
             </span>
           </div>

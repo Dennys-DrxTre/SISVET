@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 from datetime import datetime
+import json
 
 from apps.cashier.forms import ProductForm
 from apps.cashier.models import Product, ChildProduct
