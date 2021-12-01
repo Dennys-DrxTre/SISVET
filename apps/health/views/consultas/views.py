@@ -49,7 +49,6 @@ class ConsultaViews(Perms_Check, TemplateView):
                     consul.total = request.POST.get('total')
                     consul.date_c = request.POST.get('date_c')
                     consul.date_u = request.POST.get('date_u')
-                    consul.date_u  = datetime.strptime(consul.date_c, '%Y-%m-%d') + timedelta(days = 30)
                     consul.diag_pre = request.POST.get('diag_pre')
                     consul.diag_def = request.POST.get('diag_def')
                     consul.fre_car = request.POST.get('fre_car')

@@ -161,7 +161,6 @@ $(function () {
         
         var tr = tblCate.cell($(this).closest('td, li')).index();
         var data = tblCate.row(tr.row).data();
-        console.log(data)
         var parameters = new FormData();
         parameters.append('action', 'btn-estado')
         parameters.append('id', data.id)

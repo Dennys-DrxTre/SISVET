@@ -85,9 +85,10 @@ $('#data tbody').on('click', 'a[rel="detail"]', function () {
     var data = tblCate.row(tr.row).data();
     
     date = document.getElementById('date_b').innerHTML = data.date;
-    total = document.getElementById('total_b').innerHTML = '$' + data.total;
-    iva = document.getElementById('iva_b').innerHTML = '$' + data.iva;
-    sub_total = document.getElementById('subtotal_b').innerHTML = '$' + data.sub_total;
+    total = document.getElementById('total_b').innerHTML = '$' + parseFloat(data.total).toFixed(2);
+    total_bs = document.getElementById('total_bs').innerHTML = parseFloat(data.total_bs).toFixed(2) + ' Bs' ;
+    iva = document.getElementById('iva_b').innerHTML = '%' + data.iva;
+    sub_total = document.getElementById('subtotal_b').innerHTML = '$' + parseFloat(data.sub_total).toFixed(2);
     provider = document.getElementById('provider').innerHTML = data.client.dni;
 
     tblprod = $('#data2').DataTable({

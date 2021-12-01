@@ -5,10 +5,15 @@ from django.template.loader import get_template
 from django.views.generic.base import TemplateView
 from xhtml2pdf import pisa
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required, permission_required
+from django.utils.decorators import method_decorator
+
 
 import datetime
 from django.utils.dateparse import parse_date
 from datetime import timedelta, date
+from apps.entity.mixins import Perms_Check
+
 
 from apps.entity.models import Pet
 from apps.health.models import Parasite, Vaccine, Consultation
@@ -41,13 +46,26 @@ def link_callback(uri, rel):
     return path
 
 # menu health
-class MenuHealth(TemplateView):
-    template_name = "health/menu_health.html"
 
-class MenuCashier(TemplateView):
+class MenuHealth(Perms_Check, TemplateView):
+    template_name = "health/menu_health.html"
+    permission_required = 'cashier.view_detail_bs'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+class MenuCashier(Perms_Check, TemplateView):
     template_name = "health/menu_cashier.html"
+    permission_required = 'cashier.view_detail_bs'
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 # MASCOTAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def PetsReports(request):
     template_path= 'health/pets_reports.html'
     today = timezone.now()
@@ -70,6 +88,8 @@ def PetsReports(request):
     return response
 
 # VACUNAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def VaccineReports(request):
     template_path= 'health/vaccine_reports.html'
     today = timezone.now()
@@ -92,6 +112,8 @@ def VaccineReports(request):
     return response
 
 # Desparacitacion
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def ParasiteReports(request):
     template_path= 'health/parasite_reports.html'
     today = timezone.now()
@@ -114,6 +136,8 @@ def ParasiteReports(request):
     return response
 
 # CONSULTAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def ConsultasReports(request):
     template_path= 'health/consultas_reports.html'
     today = timezone.now()
@@ -136,6 +160,8 @@ def ConsultasReports(request):
     return response
 
 # CONSULTAS DETALLE
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def ConsultaReports(request, id):
     template_path= 'health/Consulta_reports.html'
 
@@ -166,6 +192,8 @@ def ConsultaReports(request, id):
     return response
 
 # VENTAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def VentasReports(request):
     template_path= 'health/ventas_reports.html'
     today = timezone.now()
@@ -188,6 +216,8 @@ def VentasReports(request):
     return response
 
 # VENTAS DETALLE
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def VentasDetalleReports(request, id):
     template_path= 'cashier/ventasDetalle_reports.html'
     today = timezone.now()
@@ -210,6 +240,8 @@ def VentasDetalleReports(request, id):
     return response
 
 # COMPRA DETALLE
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def CompraDetalleReports(request, id):
     template_path= 'cashier/CompraDetalle_reports.html'
     today = timezone.now()
@@ -232,6 +264,8 @@ def CompraDetalleReports(request, id):
     return response
 
 # COMPRAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def ComprasReports(request):
     template_path= 'cashier/compras_reports.html'
     today = timezone.now()
@@ -254,6 +288,8 @@ def ComprasReports(request):
     return response
 
 # PRODUCTOS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def ProductosReports(request):
     template_path= 'cashier/products_reports.html'
     today = timezone.now()
@@ -278,6 +314,8 @@ def ProductosReports(request):
 # REPORTES DINAMICOS
 
 # CONSULTAS POR RANGO DE FECHAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def Report_RangeDate(request, date1, date2):
     template_path = 'health/report_rangedate.html'
     today = date.today
@@ -307,6 +345,8 @@ def Report_RangeDate(request, date1, date2):
     return response
 
 # VENTAS POR RANGO DE FECHAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def Report_RangeDateVenta(request, date1, date2):
     template_path = 'cashier/report_rangedateventa.html'
     today = date.today
@@ -336,6 +376,8 @@ def Report_RangeDateVenta(request, date1, date2):
     return response
 
 # COMPRAS POR RANGO DE FECHAS
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
 def Report_RangeDateCompra(request, date1, date2):
     template_path = 'cashier/report_rangedateCompra.html'
     today = date.today

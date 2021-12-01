@@ -54,6 +54,8 @@ class ChildProduct(Estado):
 class Buy_Sale(Estado):
     date = models.DateField(default=date.today, verbose_name='Fecha')
     total = models.FloatField(default=0, verbose_name='Total')
+    price_dollar = models.FloatField(default=0, verbose_name='Precio dolar')
+    total_bs = models.FloatField(default=0, verbose_name='Total Bolivares')
     iva = models.FloatField(default=0, verbose_name='IVA')
     sub_total = models.FloatField(default=0, verbose_name='Sub Total')
     type_bs = models.CharField(max_length = 30, choices=type_sale_buy, verbose_name='Tipo')

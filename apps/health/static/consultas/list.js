@@ -125,6 +125,7 @@ $(function () {
             $('textarea[name="fre_car"]').val(data.fre_car);
             $('textarea[name="fre_res"]').val(data.fre_res);
             $('input[name="date_c"]').val(data.date_c);
+            $('input[name="date_u"]').val(data.date_u);
             $('textarea[name="examination"]').val(data.examination);
             $('input[name="total"]').val(data.total);
             
@@ -184,6 +185,7 @@ $(function () {
         $('textarea[name="fre_car"]').val(data.fre_car);
         $('textarea[name="fre_res"]').val(data.fre_res);
         $('input[name="date_c"]').val(data.date_c);
+        $('input[name="date_u"]').val(data.date_u);
         $('textarea[name="examination"]').val(data.examination);
         $('input[name="total"]').val(data.total);
         // $('input[name="substitute"]').val(data.substitute);

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>SISVET | Importar Productos</title>
+{% endblock tittle %}
+
+{% block pluginscss %}
+
+{% endblock pluginscss %}
+
+{% block contenido %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-left">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+          <li class="breadcrumb-item active">Configuración</li>
+          <li class="breadcrumb-item active">Importar Productos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Importar Productos</h3>
+          </div>
+          <!-- /.card-header -->
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="card-body">
+              <div class="form-group">
+                <label for="exampleInputFile">Archivo</label>
+                <div class="input-group">
+                  <input type="file" class="form-control-file" name="myfile">
+                </div>
+              </div>
+            </div>
+            <div class="card-footer">
+              <a href="#" onclick="PagePrevious()" class="btn btn-danger">Cancelar</a>
+              <button type="submit" class="btn btn-colores">Importar</button>
+            </div>
+          </form>
+            <!-- /.card-body -->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock contenido %}
+
+{% block pluginsjs %}
+<script>
+    {% if messages %}
+        {% for mensaje in messages %}
+          {% if mensaje.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            function mensaje(sms) {
+              toastr.error(sms)
+            }
+            mensaje('{{ mensaje }}')
+          {% else %}
+            function mensaje(sms) {
+              toastr.success(sms)
+            }
+              mensaje('{{ mensaje }}')
+          {% endif %}
+        {% endfor %}
+    {% endif %}
+</script>
+
+{% endblock pluginsjs %}
+
+
