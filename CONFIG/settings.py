@@ -146,3 +146,4 @@ EMAIL_HOST_USER = 'legoagroemail@gmail.com'
 EMAIL_HOST_PASSWORD = 'LegoEmail.'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+WHITENOISE_MANIFEST_STRICT = False
