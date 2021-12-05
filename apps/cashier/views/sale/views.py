@@ -117,6 +117,8 @@ class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
                     buy.sub_total = float(vents['subtotal'])
                     buy.iva = float(vents['iva'])
                     buy.total = float(vents['total'])
+                    buy.total_bs = float(vents['total_bs'])
+                    buy.price_dollar = float(vents['price_dollar'])
                     buy.save()
 
                     for i in vents['products']:
@@ -193,6 +195,8 @@ class Edit_Sale(Perms_Check, SuccessMessageMixin, UpdateView):
                     buy.sub_total = float(vents['subtotal'])
                     buy.iva = float(vents['iva'])
                     buy.total = float(vents['total'])
+                    buy.total_bs = float(vents['total_bs'])
+                    buy.price_dollar = float(vents['price_dollar'])
                     buy.save()
 
                     for i in Detail_BS.objects.filter(buy_sale=self.get_object()):

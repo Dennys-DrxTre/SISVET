@@ -139,6 +139,7 @@ $(function () {
     $('.btn-add').on('click', function () {
         $('input[name="action"]').val('add')
         modal_title.find('h5').html('Registrar Vacunacion')
+        $('select[name="pet"]').val(null).trigger('change');
         $('form')[0].reset();
         $('#ModalNew').modal('show');
 

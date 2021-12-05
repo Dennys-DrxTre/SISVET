@@ -66,7 +66,7 @@ class ClientViews(Perms_Check, TemplateView):
                 perms = ('entity.change_client',)
                 if request.user.has_perms(perms):
                     clien = Client.objects.get(pk=request.POST['id'])
-                    user = User.objects.get(username=clien)
+                    user = User.objects.get(username=clien.dni)
                     clien.type_name = request.POST.get('type_name')
                     clien.dni = request.POST.get('dni')
                     user.username = clien.dni

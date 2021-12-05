@@ -101,6 +101,7 @@ $(function () {
         $('input[name="action"]').val('add')
         modal_title.find('h5').html('Registrar Mascota')
         $('form')[0].reset();
+        $('select[name="client"]').val(null).trigger('change');
         $('#ModalNew').modal('show');
 
     });
@@ -161,7 +162,6 @@ $(function () {
         
         var tr = tblCate.cell($(this).closest('td, li')).index();
         var data = tblCate.row(tr.row).data();
-        console.log(data)
         var parameters = new FormData();
         parameters.append('action', 'btn-estado')
         parameters.append('id', data.id)

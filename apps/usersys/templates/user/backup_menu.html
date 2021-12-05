@@ -1,0 +1,370 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>SISVET | Respaldo de datos</title>
+{% endblock tittle %}
+
+{% block pluginscss %}
+
+{% endblock pluginscss %}
+
+{% block contenido %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-left">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+          <li class="breadcrumb-item active">Configuración</li>
+          <li class="breadcrumb-item active">Respaldo de datos</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col">
+        <div class="alert alert-danger alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-ban"></i> AVISO acerca de esta sección</h5>
+          Esta seccion es solo para exportar e importar los datos del sistema, no es recomendable editar los archivos exportados ya que podria dañar la base de datos.
+        </div>
+      </div>
+      <div class="col">
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          <h5><i class="icon fas fa-exclamation-triangle"></i> IMPORTANTE, guia para importar en buen orden la base de datos, para el buen funcionamiento del sistema</h5>
+          1.Cliente, 2.Mascota, 3.Proveedor, 4.Consulta, 5.Vacunación, 6.Desparasitación, 7.Jornada de Vacunación, 7,5. Detalle de Jornada de Vacunación, 8.Producto, 8,5.Child Producto, 9.Detalle de movimientos, 9,5.Movimientos
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR CLIENTES
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_client' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_client' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR MASCOTAS  
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_pet' %}">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_pet' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR PROVEEDORES  
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_provider' %}">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_provider' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR CONSULTAS
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_consult' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_consult' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR VACUNACIONES
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_vaccine' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_vaccine' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR DESPARASITACIONES
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_parasite' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_parasite' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR JORNADA DE VACUNACIONES
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_vaccineday' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_vaccineday' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR DETALLE DE JORNADA DE VACUNACIONES
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_det_vaccineday' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_det_vaccineday' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR PRODUCTOS
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_product' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_product' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+    </div>
+
+    <div class="row">
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR CHILD PRODUCTOS
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_child_product' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_child_product' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR MOVIMIENTOS
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_movement' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_movement' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>  
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+              EXPORTAR E IMPORTAR DETALLES DE MOVIMIENTOS
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_det_movement' %}" rel="export-client">
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_det_movement' %}">
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>  
+    </div>
+  </div>
+</section>
+{% endblock contenido %}

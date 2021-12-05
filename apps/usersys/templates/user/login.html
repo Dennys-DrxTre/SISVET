@@ -11,12 +11,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{% static 'lib/plugins/fontawesome-free/css/all.min.css' %} ">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="{% static 'lib/plugins/icheck-bootstrap/icheck-bootstrap.min.css' %} ">
   <!-- Theme style -->
   <link rel="stylesheet" href=" {% static 'lib/adminlte/css/adminlte.min.css' %} ">
   <link rel="stylesheet" href=" {% static 'lib/adminlte/css/styles.css' %} ">
   <link rel="stylesheet" href="{% static 'lib/plugins/toastr/toastr.min.css' %}">
+  <link rel="shortcut icon" href="{% static 'img/legoagro.jpg' %}" type="image/x-icon">
 
   <!-- Google Font: Source Sans Pro -->
 </head>
@@ -24,7 +23,7 @@
 <body class="hold-transition login-page login-page-color">
   <div class="login-box">
     <div class="login-logo">
-      <a href="../../index2.html"><b class="titulo-login">SISVET</b></a>
+      <a href="#"><b class="titulo-login">SISVET</b></a>
     </div>
     <!-- /.login-logo -->
     <div class="card">
@@ -110,6 +109,22 @@
           {% endfor %}
         {% endif %}
       {% endif %}
+
+      {% if messages %}
+        {% for mensaje in messages %}
+          {% if mensaje.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            function mensaje(sms) {
+              toastr.error(sms)
+            }
+            mensaje('{{ mensaje }}')
+          {% else %}
+            function mensaje(sms) {
+              toastr.success(sms)
+            }
+              mensaje('{{ mensaje }}')
+          {% endif %}
+        {% endfor %}
+    {% endif %}
     </script>
 {% endblock script %}
 

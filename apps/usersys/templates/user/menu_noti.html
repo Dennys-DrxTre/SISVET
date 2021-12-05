@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block tittle %}
+<title>SISVET | Notificaciones</title>
+{% endblock tittle %}
+
+{% block pluginscss %}
+
+{% endblock pluginscss %}
+
+{% block contenido %}
+<section class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-left">
+          <li class="breadcrumb-item"><a href="{% url 'dashboard:dashboard' %}" class="text-success">SISVET</a></li>
+          <li class="breadcrumb-item active">Configuración</li>
+          <li class="breadcrumb-item active">Notificaciones</li>
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">Configuración de consultas</h3>
+          </div>
+          <div class="card-body" id="data">
+            <p>Seleccion si desea enviar correos electronicos de las consultas a los clientes</p>
+            
+            {% if status %}
+              <a type="button" class="btn btn-app bg-success">
+                <i class="fas fa-play"></i> Activado 
+              </a>
+              <a class="btn btn-app" rel="inactive">
+                <i class="fas fa-power-off"></i> Desactivar
+              </a>
+            {% else %}
+              <a class="btn btn-app" rel="active">
+                <i class="fas fa-play"></i> Activar
+              </a>
+              <a type="button" class="btn btn-app bg-dark">
+                <i class="fas fa-power-off"></i> Desactivado
+              </a>
+            {% endif %}
+              
+
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock contenido %}
+
+
+{% block pluginsjs %}
+<script src="{% static 'js/menu_noti.js' %}"></script>
+{% endblock pluginsjs %}
+

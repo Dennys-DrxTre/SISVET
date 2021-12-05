@@ -156,6 +156,7 @@ $(function () {
         $('input[name="action"]').val('add')
         modal_title.find('h5').html('Registrar Desparacitacion')
         $('form')[0].reset();
+        $('select[name="pet"]').val(null).trigger('change');
         $('#ModalNew').modal('show');
 
     });

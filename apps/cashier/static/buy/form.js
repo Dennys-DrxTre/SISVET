@@ -4,7 +4,9 @@ var vents = {
     items : {
         provider: '',
         total: 0.00,
+        total_bs: 0.00,
         iva: 0.00,
+        price_dollar: 0.00,
         subtotal: 0.00,
         type_bs: 'Compra',
         products: []
@@ -12,8 +14,10 @@ var vents = {
     calculate_invoice: function () {
         var subtotal = 0.00;
         var iva = $('input[name="iva"]').val();
+        var price_dollar = $('input[name="price_dollar"]').val();
+
         $.each(this.items.products, function (pos, dict) {
-            dict.total = dict.stock * dict.price_buy;
+            dict.total = parseInt(dict.stock) * parseFloat(dict.price_buy);
             dict.profit = dict.price_sale - dict.price_buy;
             if ( parseFloat(dict.profit) < parseFloat(0.00)) {
                 dict.profit = 0.00;
@@ -24,11 +28,18 @@ var vents = {
 
         });
         this.items.subtotal = subtotal;
-        this.items.iva = this.items.subtotal * iva;
-        this.items.total = this.items.subtotal + this.items.iva;
+        this.items.iva = iva;
+        iva = this.items.subtotal * iva;
+        this.items.total = this.items.subtotal + iva;
+        this.items.total_bs = this.items.subtotal + iva;
+        this.items.total_bs = this.items.total_bs * price_dollar;
+        this.items.price_dollar = parseFloat(price_dollar).toFixed(2);
+
 
         $('input[name="sub_total"]').val(this.items.subtotal.toFixed(2))
         $('input[name="total"]').val(this.items.total.toFixed(2))
+        $('input[name="total_bs"]').val(this.items.total_bs.toFixed(2))
+
 
     },
     add: function (item) {
@@ -333,6 +344,18 @@ $(function () {
     }).on('change', function () {
         vents.calculate_invoice();
     }).val(0.16);
+
+    $("input[name='price_dollar']").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        min: 0,
+        initval: 0.00,
+    });
 
 });
 
