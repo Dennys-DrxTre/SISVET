@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import CONFIG.db as db
 from decouple import config
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,10 +22,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*=$38irmw#3rbre^#wyqhj-cnodnm^57s595m53l&e*mm9$gsn'
-
+SECRET_KEY = config('SECRET_KEY', default='*=$38irmw#3rbre^#wyqhj-cnodnm^57s595m53l&e*mm9$gsn')
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
+
+if config('DJANGO_PRODUCTION', default=False, cast=bool):
+    from .settings_production import *
+
 ALLOWED_HOSTS = ['*']
 
 
@@ -88,11 +90,11 @@ WSGI_APPLICATION = 'CONFIG.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
