@@ -26,9 +26,6 @@ SECRET_KEY = config('SECRET_KEY', default='*=$38irmw#3rbre^#wyqhj-cnodnm^57s595m
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
 
-if config('DJANGO_PRODUCTION', default=False, cast=bool):
-    from .settings_production import *
-
 ALLOWED_HOSTS = ['*']
 
 
@@ -95,6 +92,9 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+
+if config('DJANGO_PRODUCTION', default=False, cast=bool):
+    from .settings_production import *
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
