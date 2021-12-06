@@ -71,21 +71,24 @@ def send_email_consult_and_email():
 
             for c in Consultation.objects.filter(status_notify = True):
                 date_today = date.today()
-                if c.date_u == date_today:
-                    # cambiar estado
-                    c.status_notify = False
-                    c.save()
-                    # Construimos el mensaje simple
-                    mensaje = MIMEMultipart()
-                    mensaje['From']= settings.EMAIL_HOST_USER
-                    mensaje['To']= str(c.pet.client.Email) 
-                    mensaje['Subject']="Tu mascota tiene una cita"
+                if c.pet.client.Email:
+                    if c.date_u == date_today:
+                        # cambiar estado
+                        c.status_notify = False
+                        c.save()
+                        # Construimos el mensaje simple
+                        mensaje = MIMEMultipart()
+                        mensaje['From']= settings.EMAIL_HOST_USER
+                        mensaje['To']= str(c.pet.client.Email) 
+                        mensaje['Subject']="Tu mascota tiene una cita"
 
-                    content = render_to_string('send_email.html', {'client': c})
+                        content = render_to_string('send_email.html', {'client': c})
 
-                    mensaje.attach(MIMEText(content, 'html'))
-                    # Envio del mensaje
-                    mailServer.sendmail(settings.EMAIL_HOST_USER,str(c.pet.client.Email), mensaje.as_string())
+                        mensaje.attach(MIMEText(content, 'html'))
+                        # Envio del mensaje
+                        mailServer.sendmail(settings.EMAIL_HOST_USER,str(c.pet.client.Email), mensaje.as_string())
+                    else:
+                        continue
                 else:
                     continue
         
