@@ -75,8 +75,9 @@
 </table>
 {% for x in obj %}
     {% if forloop.counter <= 1 %}
-        <p style="text-align:right"><b >IVA: {{x.buy_sale.iva}}$ </b></p>
-        <p style="text-align:right"><b >Total + IVA: {{x.buy_sale.total}}$</b></p>
+    <p style="text-align:right"><b >IVA: {{x.buy_sale.iva|floatformat:2}}$ </b></p>
+    <p style="text-align:right"><b >Total + IVA: {{x.buy_sale.total|floatformat:2}}$</b></p>
+    <p style="text-align:right"><b >Total Bs + IVA: {{x.buy_sale.total_bs|floatformat:2}} Bs</b></p>
     {% endif %}
 {% endfor %}
 </body>
