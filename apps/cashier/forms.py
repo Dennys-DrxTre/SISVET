@@ -1,5 +1,6 @@
 from django.forms import ModelForm
 from apps.cashier.models import Product, Buy_Sale, Detail_BS, ChildProduct
+from apps.usersys.models import DollarStatus
 
 class ProductForm(ModelForm):
 
@@ -23,4 +24,10 @@ class DetailBuyForm(ModelForm):
 
     class Meta:
         model = Detail_BS
+        fields = '__all__'
+
+class DollarForm(ModelForm):
+
+    class Meta:
+        model = DollarStatus
         fields = '__all__'

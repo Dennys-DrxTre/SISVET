@@ -301,18 +301,6 @@ $(function () {
         vents.calculate_invoice();
     }).val(0.16);
 
-    $("input[name='price_dollar']").TouchSpin({
-        verticalbuttons: true,
-        verticalupclass: 'glyphicon glyphicon-plus',
-        verticaldownclass: 'glyphicon glyphicon-minus',
-        step: 0.01,
-        decimals: 2,
-        boostat: 5,
-        maxboostedstep: 10,
-        min: 0,
-        initval: 0.00,
-    });
-
 })
 
 function PagePrevious() {

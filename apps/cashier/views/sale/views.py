@@ -12,9 +12,10 @@ from django.contrib.messages.views import SuccessMessageMixin
 from datetime import date
 from django.db.models import Sum
 
-from apps.cashier.forms import ProductForm, BuyForm, DetailBuyForm, Product_Stock_Form
+from apps.cashier.forms import ProductForm, BuyForm, DetailBuyForm, Product_Stock_Form, DollarForm
 from apps.entity.models import Pet, Client, Provider
 from apps.cashier.models import Product, Buy_Sale, Detail_BS, ChildProduct
+from apps.usersys.models import DollarStatus
 
 from apps.entity.mixins import Perms_Check
 
@@ -110,6 +111,10 @@ class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
                 with transaction.atomic():
 
                     vents = json.loads(request.POST['vents']) 
+
+                    price_dollar = DollarStatus.objects.get(pk=1)
+                    price_dollar.price_dollar = vents['price_dollar']
+                    price_dollar.save()
                 
                     buy = Buy_Sale()
                     buy.client_id = vents['client']
@@ -144,6 +149,11 @@ class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
             print(data)
         return JsonResponse(data, safe=False)
 
+    def get_price_dollar(self):
+        get_dollar = DollarStatus.objects.get(pk=1)
+        price = get_dollar.price_dollar
+        return float(price)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['titulo'] = 'SISVET | Registar Venta'
@@ -152,6 +162,8 @@ class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
         context['navegacion2'] = 'Ventas'
         context['list_url'] = reverse_lazy('cashier:sales')
         context['action'] = 'add'
+        context['form_dollar'] = DollarForm()
+        context['get_dollar'] = self.get_price_dollar()
         context['det'] = []
         return context
 

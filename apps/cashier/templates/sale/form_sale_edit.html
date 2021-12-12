@@ -110,6 +110,21 @@
 {% endblock form %}
 
 {% block script %} 
+
+    $("input[name='price_dollar']").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        min: 0,
+        initval: 0.00, 
+    }).on('change', function () {
+        vents.calculate_invoice();
+    }).val({{ get_dollar|safe }});
+
     vents.items.products = {{ det|safe }};
     vents.list();
 {% endblock script %}

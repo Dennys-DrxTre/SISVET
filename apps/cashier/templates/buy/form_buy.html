@@ -43,6 +43,7 @@
                                 <div class="form-group col">
                                     <label for="date">Precio Dollar:</label>
                                     {{ form.price_dollar|add_class:'form-control'|attr:'name:price_dollar'|attr:'step:0.01'}}
+                                    
                                 </div>
                                 <div class="form-group col">
                                     <label for="date">Total Bs:</label>
@@ -110,9 +111,27 @@
 {% endblock form %}
 
 {% block script %} 
+
+    $("input[name='price_dollar']").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        min: 0,
+        initval: 0.00, 
+    }).on('change', function () {
+        vents.calculate_invoice();
+    }).val({{ get_dollar|safe }});
+
     console.log({{ det|safe }})
     vents.items.products = {{ det|safe }};
     vents.list();
+
+
+
 {% endblock script %}
 
 {% block form.js %}

@@ -2,48 +2,51 @@ import os
 from django.conf import settings
 from django.http import HttpResponse
 from django.template.loader import get_template
+from django.contrib.staticfiles import finders
 from django.views.generic.base import TemplateView
 from xhtml2pdf import pisa
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
-
-
 import datetime
 from django.utils.dateparse import parse_date
 from datetime import timedelta, date
 from apps.entity.mixins import Perms_Check
-
 
 from apps.entity.models import Pet
 from apps.health.models import Parasite, Vaccine, Consultation
 from apps.cashier.models import Buy_Sale, ChildProduct, Detail_BS, Product
 
 def link_callback(uri, rel):
-    """
-    Convert HTML URIs to absolute system paths so xhtml2pdf can access those
-    resources
-    """
-    # use short variable names
-    sUrl = settings.STATIC_URL      # Typically /static/
-    sRoot = settings.STATIC_ROOT    # Typically /home/userX/project_static/
-    mUrl = settings.MEDIA_URL       # Typically /static/media/
-    mRoot = settings.MEDIA_ROOT     # Typically /home/userX/project_static/media/
+        """
+        Convert HTML URIs to absolute system paths so xhtml2pdf can access those
+        resources
+        """
+        result = finders.find(uri)
+        if result:
+                if not isinstance(result, (list, tuple)):
+                        result = [result]
+                result = list(os.path.realpath(path) for path in result)
+                path=result[0]
+        else:
+                sUrl = settings.STATIC_URL        # Typically /static/
+                sRoot = settings.STATIC_ROOT      # Typically /home/userX/project_static/
+                mUrl = settings.MEDIA_URL         # Typically /media/
+                mRoot = settings.MEDIA_ROOT       # Typically /home/userX/project_static/media/
 
-    # convert URIs to absolute system paths
-    if uri.startswith(mUrl):
-        path = os.path.join(mRoot, uri.replace(mUrl, "/media/"))
-    elif uri.startswith(sUrl):
-        path = os.path.join(sRoot, uri.replace(sUrl, ""))
-    else:
-        return uri  # handle absolute uri (ie: http://some.tld/foo.png)
+                if uri.startswith(mUrl):
+                        path = os.path.join(mRoot, uri.replace(mUrl, ""))
+                elif uri.startswith(sUrl):
+                        path = os.path.join(sRoot, uri.replace(sUrl, ""))
+                else:
+                        return uri
 
-    # make sure that file exists
-    if not os.path.isfile(path):
-            raise Exception(
-                'media URI must start with %s or %s' % (sUrl, mUrl)
-            )
-    return path
+        # make sure that file exists
+        if not os.path.isfile(path):
+                raise Exception(
+                        'media URI must start with %s or %s' % (sUrl, mUrl)
+                )
+        return path
 
 # menu health
 
@@ -379,6 +382,7 @@ def Report_RangeDateVenta(request, date1, date2):
 @login_required(redirect_field_name='usersys:login')
 @permission_required('entity.view_client', '/')
 def Report_RangeDateCompra(request, date1, date2):
+
     template_path = 'cashier/report_rangedateCompra.html'
     today = date.today
     date1= parse_date(date1)
@@ -398,6 +402,89 @@ def Report_RangeDateCompra(request, date1, date2):
     }
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="Reporte por rango de fecha.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisaStatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
+    if pisaStatus.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+# REPORTE DETALLE DE CONSULTA
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
+def ConsultaDetalleReports(request, id):
+    template_path= 'health/consulta_dReport.html'
+
+    mascota = Pet.objects.filter(id = id).first()
+    consulta = Consultation.objects.filter(pet = mascota)
+
+    today = timezone.now()
+
+    context = {
+        'consulta':consulta,
+        'mascota': mascota,
+        'today':today,
+        'request':request,
+    }
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="Detalle de la consulta.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisaStatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
+    if pisaStatus.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+# REPORTE DETALLE DE VACUNACION
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
+def VacunaDetalleReports(request, id):
+    template_path= 'health/vacuna_dReport.html'
+
+    mascota = Pet.objects.filter(id = id).first()
+    #desparasitacion = Parasite.objects.filter(pet = mascota)
+    vacunacion = Vaccine.objects.filter(pet = mascota)
+    today = timezone.now()
+
+    context = {
+        'vacuna':vacunacion,
+        'mascota': mascota,
+        'today':today,
+        'request':request
+    }
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="Detalle de la vacunacion.pdf"'
+    template = get_template(template_path)
+    html = template.render(context)
+
+    pisaStatus = pisa.CreatePDF(html, dest=response, link_callback=link_callback)
+    if pisaStatus.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
+# REPORTE DETALLE DE DESPARACITACION
+@login_required(redirect_field_name='usersys:login')
+@permission_required('entity.view_client', '/')
+def DespaDetalleReports(request, id):
+    template_path= 'health/despaD_report.html'
+
+    mascota = Pet.objects.filter(id = id).first()
+    desparasitacion = Parasite.objects.filter(pet = mascota)
+    today = timezone.now()
+
+    context = {
+        'despa':desparasitacion,
+        'mascota': mascota,
+        'today':today,
+        'request':request
+    }
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="Detalle de la Desparasitacion.pdf"'
     template = get_template(template_path)
     html = template.render(context)
 

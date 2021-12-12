@@ -2,6 +2,8 @@ from django.urls import path
 from .views import PetsReports, VaccineReports, ParasiteReports, MenuHealth,MenuCashier, VentasReports, ConsultaReports
 from .views import ConsultasReports, ProductosReports, ComprasReports, VentasDetalleReports, CompraDetalleReports, Report_RangeDate
 from .views import Report_RangeDateVenta, Report_RangeDateCompra
+from .views import ConsultaDetalleReports, VacunaDetalleReports, DespaDetalleReports
+
 app_name = 'reports'
 
 urlpatterns = [
@@ -24,4 +26,9 @@ urlpatterns = [
     path("reports_dinamic/<str:date1>/<str:date2>", Report_RangeDate, name="report_rangoConsulta"),
     path("reports_dinamic/venta/<str:date1>/<str:date2>", Report_RangeDateVenta, name="report_rangoVenta"),
     path("reports_dinamic/compra/<str:date1>/<str:date2>", Report_RangeDateCompra, name="report_rangoVenta"),
+
+    # REPORTES DETALLES SECCION MEDICA
+    path("reports/consultation/detalle/<int:id>/", ConsultaDetalleReports, name="report_consultationD"),
+    path("reports/vacunacion/detalle/<int:id>/", VacunaDetalleReports, name="report_vaccinateD"),
+    path("reports/desparasitacion/detalle/<int:id>/", DespaDetalleReports, name="report_desparasitationD"),
 ]

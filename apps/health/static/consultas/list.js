@@ -65,12 +65,7 @@ function getData() {
                     var buttons = '<a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
                     buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';
-
-                    if (data == '<span class="badge badge-success btn-colores">Activado</span>'){
-                        buttons += '<a href="#" rel="btn-estado" class="btn btn-colores"><i class="fas fa-power-off"></i></a> ';
-                    }else if (data == '<span class="badge badge-dark">Desactivado</span>'){
-                        buttons += '<a href="#" rel="btn-estado" class="btn btn-dark"><i class="fas fa-power-off"></i></a> ';
-                    }
+                    buttons += '<a href="#" rel="pdf" class="btn btn-dark"><i class="fas fa-file-pdf"></i></a> ';
                    
                     return buttons;
                 }
@@ -166,6 +161,13 @@ $(function () {
         $('select[name="pet"]').val(null).trigger('change');
         $('#ModalNew').modal('show');
 
+    });
+
+    /** PDF CONSULTAS */
+    $('#data tbody').on('click', 'a[rel="pdf"]', function () {
+        var tr = tblCate.cell($(this).closest('td, li')).index();
+        var data = tblCate.row(tr.row).data();
+        window.open('/reports/consultation/detalle/' + data.id + '/');
     });
 
     /** EDIT PET */

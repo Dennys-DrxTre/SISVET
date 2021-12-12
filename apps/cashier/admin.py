@@ -1,6 +1,7 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
 from apps.cashier.models import *
+from apps.usersys.models import DollarStatus
 
 # Register your models here.
 
@@ -26,4 +27,8 @@ class VaccineDayAdmin(ImportExportModelAdmin):
 
 @admin.register(Det_VaccineDay)
 class Det_VaccineDayAdmin(ImportExportModelAdmin):
+    pass
+
+@admin.register(DollarStatus)
+class DollarAdmin(ImportExportModelAdmin):
     pass

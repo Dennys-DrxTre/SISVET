@@ -11,9 +11,10 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Sum
 
-from apps.cashier.forms import ProductForm, BuyForm, DetailBuyForm, Product_Stock_Form
+from apps.cashier.forms import ProductForm, BuyForm, DetailBuyForm, Product_Stock_Form, DollarForm
 from apps.entity.models import Pet, Client, Provider
 from apps.cashier.models import Product, Buy_Sale, Detail_BS, ChildProduct
+from apps.usersys.models import DollarStatus
 
 from apps.entity.mixins import Perms_Check
 
@@ -105,7 +106,11 @@ class Create_Buy(Perms_Check, SuccessMessageMixin, CreateView):
                 with transaction.atomic():
 
                     vents = json.loads(request.POST['vents']) 
-                
+
+                    price_dollar = DollarStatus.objects.get(pk=1)
+                    price_dollar.price_dollar = vents['price_dollar']
+                    price_dollar.save()
+
                     buy = Buy_Sale()
                     buy.provider_id = vents['provider']
                     buy.type_bs = vents['type_bs']
@@ -162,6 +167,11 @@ class Create_Buy(Perms_Check, SuccessMessageMixin, CreateView):
             data['error'] = str(e)
             print(data)
         return JsonResponse(data, safe=False)
+    
+    def get_price_dollar(self):
+        get_dollar = DollarStatus.objects.get(pk=1)
+        price = get_dollar.price_dollar
+        return float(price)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -171,18 +181,18 @@ class Create_Buy(Perms_Check, SuccessMessageMixin, CreateView):
         context['navegacion2'] = 'Compras'
         context['list_url'] = reverse_lazy('cashier:buys')
         context['action'] = 'add'
+        context['form_dollar'] = DollarForm()
+        context['get_dollar'] = self.get_price_dollar()
         context['det'] = []
         return context
 
 
 class Edit_Buy(Perms_Check, SuccessMessageMixin, UpdateView):
-
     template_name = 'buy/form_buy.html'
     permission_required = 'cashier.change_buy_sale'
     model = Buy_Sale
     form_class = BuyForm
     success_massage = 'La compra ha sido modificada correctamente'
-
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)
@@ -205,6 +215,10 @@ class Edit_Buy(Perms_Check, SuccessMessageMixin, UpdateView):
                 with transaction.atomic():
 
                     vents = json.loads(request.POST['vents']) 
+
+                    price_dollar = DollarStatus.objects.get(pk=1)
+                    price_dollar.price_dollar = vents['price_dollar']
+                    price_dollar.save()
                 
                     buy = self.get_object()
                     buy.provider_id = vents['provider']
@@ -277,13 +291,11 @@ class Edit_Buy(Perms_Check, SuccessMessageMixin, UpdateView):
                 item['name'] = i.product.product.name
                 item['id'] = i.product.product.id
                 item['id_child'] = i.product.id
-
-
                 data.append(item)
-
         except:
             pass
         return data
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

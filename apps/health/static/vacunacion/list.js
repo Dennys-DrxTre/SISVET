@@ -60,7 +60,8 @@ function getData() {
                 render: function (data, type, row) {
                     var buttons = '<a href="#" rel="edit" class="btn btn-warning"><i class="fas fa-edit"></i></a> ';
                     buttons += '<a href="#" rel="delete" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a> ';
-                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';                   
+                    buttons += '<a href="#" rel="detail" class="btn btn-info"><i class="fas fa-folder-open"></i></a> ';     
+                    buttons += '<a href="#" rel="pdf" class="btn btn-dark"><i class="fas fa-file-pdf"></i></a> ';              
                     return buttons;
                 }
             },
@@ -185,7 +186,13 @@ $(function () {
             
         });
     });
-
+    
+    /** PDF vacunacion */
+    $('#data tbody').on('click', 'a[rel="pdf"]', function () {
+        var tr = tblCate.cell($(this).closest('td, li')).index();
+        var data = tblCate.row(tr.row).data();
+        window.open('/reports/vacunacion/detalle/' + data.id + '/');
+    });
 
     /** FORM SUBMIT */
     $('form').on('submit', function (e) {
