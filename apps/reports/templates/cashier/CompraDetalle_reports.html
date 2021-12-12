@@ -68,7 +68,7 @@
             <td class="cosa">{{ x.product.product.name }}</td>
             <td class="cosa">{{ x.stock }}</td>
             <td class="cosa">{{ x.product.price_buy}}$</td>
-            <td class="cosa">{{ x.total}} Bs</td>
+            <td class="cosa">{{ x.total}}$</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -77,7 +77,7 @@
     {% if forloop.counter <= 1 %}
         <p style="text-align:right"><b >IVA: {{x.buy_sale.iva}}$ </b></p>
         <p style="text-align:right"><b >Total + IVA: {{x.buy_sale.total}}$</b></p>
-        <p style="text-align:right"><b >Total Bs + IVA: {{x.buy_sale.total_bs}}$</b></p>
+        <p style="text-align:right"><b >Total Bs + IVA: {{x.buy_sale.total_bs}} Bs</b></p>
     {% endif %}
 {% endfor %}
 </body>
