@@ -200,37 +200,39 @@
           </ul>
         </li>
 
+        
+        {% if perms.usersys.view_notificationstatus %}
+          <li class="nav-header">SISTEMA</li>
 
-        <li class="nav-header">SISTEMA</li>
-
-
-        <li class="nav-item has-treeview">
-          <a href="#" class="nav-link">
-            <i class="nav-icon fas fa-cogs"></i>
-            <p>
-              Configuración
-              <i class="right fas fa-angle-left"></i>
-            </p>
-          </a>
-          <ul class="nav nav-treeview">
-            <li class="nav-item">
-              <a href="{% url 'usersys:menu_noti' %}" class="nav-link">
-                <i class="fas fa-envelope nav-icon"></i>
-                <p>
-                  Notificaciones
-                </p>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="{% url 'usersys:menu_backup' %}" class="nav-link">
-                <i class="nav-icon fas fa-save"></i>
-                <p>
-                  Respaldo de Datos
-                </p>
-              </a>
-            </li>
-          </ul>
-        </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-cogs"></i>
+              <p>
+                Configuración
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{% url 'usersys:menu_noti' %}" class="nav-link">
+                  <i class="fas fa-envelope nav-icon"></i>
+                  <p>
+                    Notificaciones
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url 'usersys:menu_backup' %}" class="nav-link">
+                  <i class="nav-icon fas fa-save"></i>
+                  <p>
+                    Respaldo de Datos
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </li>       
+        {% endif %}
+      
 
       </ul>
     </nav>
