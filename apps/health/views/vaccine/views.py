@@ -24,7 +24,7 @@ from apps.entity.mixins import Perms_Check
 # CRUD CLIENTS URL
 class VaccineDayViews(Perms_Check, TemplateView):
     template_name = 'vaccine/vaccineday.html'
-    permission_required = 'cashier.change_vaccineday'
+    permission_required = 'cashier.view_vaccineday'
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)
@@ -71,7 +71,7 @@ class VaccineDayViews(Perms_Check, TemplateView):
 
 class Create_VaccineDay(Perms_Check, SuccessMessageMixin, CreateView):
     template_name = 'vaccine/form_vaccineday.html'
-    permission_required = 'cashier.view_vaccineday'
+    permission_required = 'cashier.change_vaccineday'
     model = VaccineDay
     form_class = VaccineDayForm
     success_massage = 'La jornada de vacunación ha sido registrada correctamente'
