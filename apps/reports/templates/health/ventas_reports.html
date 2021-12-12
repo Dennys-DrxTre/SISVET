@@ -53,6 +53,7 @@
             <th class="cosa">Sub total</th>
             <th class="cosa">IVA</th>
             <th class="cosa">Total</th>
+            <th class="cosa">Total Bs</th>
             <th class="cosa">Cliente</th>
             <th class="cosa">Fecha</th>
         </tr>
@@ -62,7 +63,8 @@
         <tr>
             <td class="cosa">{{ x.sub_total }}$</td>
             <td class="cosa">{{ x.iva }}$</td>
-            <td class="cosa">{{ x.total }}$</td>
+            <td class="cosa">{{ x.total|floatformat:2 }}$</td>
+            <td class="cosa">{{ x.total_bs|floatformat:2 }}$</td>
             <td class="cosa">{{ x.client }}</td>
             <td class="cosa">{{ x.date|date:"d-m-Y" }}</td>
         </tr>
