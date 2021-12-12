@@ -24,7 +24,7 @@ from apps.entity.mixins import Perms_Check
 # CRUD CLIENTS URL
 class VaccineDayViews(Perms_Check, TemplateView):
     template_name = 'vaccine/vaccineday.html'
-    permission_required = 'cashier.view_vaccineday'
+    permission_required = 'cashier.change_vaccineday'
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)
