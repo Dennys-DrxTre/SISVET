@@ -58,15 +58,17 @@
             </p>
           </a>
         </li>
-
-        <li class="nav-item">
-          <a href="{% url 'dashboard:charts' %}" class="nav-link">
-            <i class="nav-icon fas fa-chart-pie"></i>
-            <p>
-              Estadiscticas
-            </p>
-          </a>
-        </li>
+        
+        {% if perms.usersys.view_notificationstatus %}
+          <li class="nav-item">
+            <a href="{% url 'dashboard:charts' %}" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Estadiscticas
+              </p>
+            </a>
+          </li>
+        {% endif %}
 
         <li class="nav-header">CARTERA DE CLIENTES</li>
 

@@ -65,6 +65,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
 class ChartsView(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/charts.html'
+    permission_required = 'usersys.view_notificationstatus'
 
     def dispatch(self, request, *args, **kwargs):
         perm = ('entity.view_clientuser',)
