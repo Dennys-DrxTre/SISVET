@@ -136,6 +136,8 @@ class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
                             det.buy_sale_id = buy.id
                             det.product_id = i['id']
                             det.stock = int(i['stock'])
+                            det.price_buy = float(i['price_buy'])
+                            det.price_sale = float(i['price_sale'])
                             det.total = float(i['total'])
                             det.profit = float(det.stock * i['profit'])
                             det.save() 
@@ -227,6 +229,8 @@ class Edit_Sale(Perms_Check, SuccessMessageMixin, UpdateView):
                             det.buy_sale_id = buy.id
                             det.product_id = i['id']
                             det.stock = int(i['stock'])
+                            det.price_buy = float(i['price_buy'])
+                            det.price_sale = float(i['price_sale'])
                             det.total = float(i['total'])
                             det.profit = float(det.stock * i['profit'])
                             det.save()
@@ -247,6 +251,8 @@ class Edit_Sale(Perms_Check, SuccessMessageMixin, UpdateView):
                 item['stock'] = i.stock
                 item['name'] = i.product.product.name
                 item['exist_stock'] = i.product.stock + i.stock
+                item['price_buy'] = i.price_buy
+                item['price_sale'] = i.price_sale
                 data.append(item)
 
         except:

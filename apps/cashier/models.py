@@ -85,6 +85,8 @@ class Buy_Sale(Estado):
     
 class Detail_BS(Estado):
     stock = models.IntegerField(default=0, verbose_name='Cantidad')
+    price_buy = models.FloatField(default=0, verbose_name='Precio Compra')
+    price_sale = models.FloatField(default=0, verbose_name='Precio Venta')
     total = models.FloatField(default=0, verbose_name='Total')
     profit = models.FloatField(default=0, verbose_name='Ganancia')
     buy_sale = models.ForeignKey(Buy_Sale, on_delete=models.CASCADE, verbose_name='Compra Venta', null = True, blank=True)
