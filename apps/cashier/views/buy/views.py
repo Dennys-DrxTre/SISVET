@@ -80,7 +80,7 @@ class BuyViews(Perms_Check, TemplateView):
 
 class Create_Buy(Perms_Check, SuccessMessageMixin, CreateView):
     template_name = 'buy/form_buy.html'
-    permission_required = 'cashier.view_detail_bs'
+    permission_required = 'cashier.change_detail_bs'
     model = Buy_Sale
     form_class = BuyForm
     success_massage = 'La compra ha sido registrada correctamente'
