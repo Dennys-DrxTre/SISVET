@@ -81,7 +81,7 @@ class SaleViews(Perms_Check, TemplateView):
 
 class Create_Sale(Perms_Check, SuccessMessageMixin, CreateView):
     template_name = 'sale/form_sale.html'
-    permission_required = 'cashier.view_detail_bs'
+    permission_required = 'cashier.change_detail_bs'
     model = Buy_Sale
     form_class = BuyForm
     success_massage = 'La venta ha sido registrada correctamente'
