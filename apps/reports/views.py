@@ -8,10 +8,19 @@ from xhtml2pdf import pisa
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required, permission_required
 from django.utils.decorators import method_decorator
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 import datetime
 from django.utils.dateparse import parse_date
 from datetime import timedelta, date
 from apps.entity.mixins import Perms_Check
+<<<<<<< HEAD
+=======
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
 from apps.entity.models import Pet
 from apps.health.models import Parasite, Vaccine, Consultation
@@ -53,11 +62,19 @@ def link_callback(uri, rel):
 class MenuHealth(Perms_Check, TemplateView):
     template_name = "health/menu_health.html"
     permission_required = 'cashier.view_detail_bs'
+<<<<<<< HEAD
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
 
+=======
+
+    @method_decorator(login_required)
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 class MenuCashier(Perms_Check, TemplateView):
     template_name = "health/menu_cashier.html"
     permission_required = 'cashier.view_detail_bs'

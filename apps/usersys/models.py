@@ -7,6 +7,7 @@ class NotificationStatus(models.Model):
     class Meta:
         verbose_name_plural = 'Estado de Notificación'
         verbose_name = 'Estado de Notificación'
+<<<<<<< HEAD
         ordering = ['id']
 
 class DollarStatus(models.Model):
@@ -15,4 +16,6 @@ class DollarStatus(models.Model):
     class Meta:
         verbose_name_plural = 'Estado del Dolar'
         verbose_name = 'Estado del Dolar'
+=======
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
         ordering = ['id']

@@ -71,6 +71,7 @@ def send_email_consult_and_email():
 
             for c in Consultation.objects.filter(status_notify = True):
                 date_today = date.today()
+<<<<<<< HEAD
                 if c.pet.client.Email:
                     if c.date_u == date_today:
                         # cambiar estado
@@ -89,6 +90,23 @@ def send_email_consult_and_email():
                         mailServer.sendmail(settings.EMAIL_HOST_USER,str(c.pet.client.Email), mensaje.as_string())
                     else:
                         continue
+=======
+                if c.date_u == date_today:
+                    # cambiar estado
+                    c.status_notify = False
+                    c.save()
+                    # Construimos el mensaje simple
+                    mensaje = MIMEMultipart()
+                    mensaje['From']= settings.EMAIL_HOST_USER
+                    mensaje['To']= str(c.pet.client.Email) 
+                    mensaje['Subject']="Tu mascota tiene una cita"
+
+                    content = render_to_string('send_email.html', {'client': c})
+
+                    mensaje.attach(MIMEText(content, 'html'))
+                    # Envio del mensaje
+                    mailServer.sendmail(settings.EMAIL_HOST_USER,str(c.pet.client.Email), mensaje.as_string())
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
                 else:
                     continue
         
@@ -97,7 +115,11 @@ def send_email_consult_and_email():
 
 class Menu_Notification(Perms_Check, TemplateView):
     template_name = 'user/menu_noti.html'
+<<<<<<< HEAD
     permission_required = 'usersys.view_notificationstatus'
+=======
+    permission_required = 'cashier.view_detail_bs'
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)
@@ -140,7 +162,11 @@ class Menu_Notification(Perms_Check, TemplateView):
 
 class BackupViews(Perms_Check, TemplateView):
     template_name = 'user/backup_menu.html'
+<<<<<<< HEAD
     permission_required = 'usersys.view_notificationstatus'
+=======
+    permission_required = 'cashier.view_detail_bs'
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
     @method_decorator(csrf_exempt)
     @method_decorator(login_required)

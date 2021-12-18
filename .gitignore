@@ -1,3 +1,9 @@
+<<<<<<< HEAD
 *.pyc
 db.sqlite3
 __pycache__
+=======
+.env
+db.sqlite3
+__pycache__
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5

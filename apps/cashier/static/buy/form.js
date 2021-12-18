@@ -15,7 +15,11 @@ var vents = {
         var subtotal = 0.00;
         var iva = $('input[name="iva"]').val();
         var price_dollar = $('input[name="price_dollar"]').val();
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
         $.each(this.items.products, function (pos, dict) {
             dict.total = parseInt(dict.stock) * parseFloat(dict.price_buy);
             dict.profit = dict.price_sale - dict.price_buy;
@@ -39,6 +43,11 @@ var vents = {
         $('input[name="sub_total"]').val(this.items.subtotal.toFixed(2))
         $('input[name="total"]').val(this.items.total.toFixed(2))
         $('input[name="total_bs"]').val(this.items.total_bs.toFixed(2))
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
     },
     add: function (item) {
         this.items.products.push(item);
@@ -343,6 +352,20 @@ $(function () {
         vents.calculate_invoice();
     }).val(0.16);
 
+<<<<<<< HEAD
+=======
+    $("input[name='price_dollar']").TouchSpin({
+        verticalbuttons: true,
+        verticalupclass: 'glyphicon glyphicon-plus',
+        verticaldownclass: 'glyphicon glyphicon-minus',
+        step: 0.01,
+        decimals: 2,
+        boostat: 5,
+        maxboostedstep: 10,
+        min: 0,
+        initval: 0.00,
+    });
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
 });
 

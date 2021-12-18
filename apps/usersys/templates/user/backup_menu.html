@@ -38,7 +38,11 @@
         <div class="alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
           <h5><i class="icon fas fa-exclamation-triangle"></i> IMPORTANTE, guia para importar en buen orden la base de datos, para el buen funcionamiento del sistema</h5>
+<<<<<<< HEAD
           1.Cliente, 2.Mascota, 3.Proveedor, 4.Consulta, 5.Vacunación, 6.Desparasitación, 7.Producto, 7,5.Child Producto, 8.Jornada de Vacunación, 8,5. Detalle de Jornada de Vacunación, 9.Detalle de movimientos, 9,5.Movimientos
+=======
+          1.Cliente, 2.Mascota, 3.Proveedor, 4.Consulta, 5.Vacunación, 6.Desparasitación, 7.Jornada de Vacunación, 7,5. Detalle de Jornada de Vacunación, 8.Producto, 8,5.Child Producto, 9.Detalle de movimientos, 9,5.Movimientos
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
         </div>
       </div>
 
@@ -203,7 +207,10 @@
       </div>
 
     </div>
+<<<<<<< HEAD
     
+=======
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
     <div class="row">
       <div class="col">
@@ -211,70 +218,106 @@
           <div class="card-header">
             <h3 class="card-title">
               <i class="fas fa-file-excel"></i>
+<<<<<<< HEAD
               EXPORTAR E IMPORTAR PRODUCTOS
-            </h3>
-          </div>
-          <div class="card-body" id="data">    
-            <div class="row">
-              <div class="col">
-                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_product' %}" rel="export-client">
-                  <i class="fas fa-file-export"></i> Exportar
-                </a>
-              </div>  
-              <div class="col">
-                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_product' %}">
-                  <i class="fas fa-file-import"></i> Importar
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card" >
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="fas fa-file-excel"></i>
-              EXPORTAR E IMPORTAR CHILD PRODUCTOS
-            </h3>
-          </div>
-          <div class="card-body" id="data">    
-            <div class="row">
-              <div class="col">
-                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_child_product' %}" rel="export-client">
-                  <i class="fas fa-file-export"></i> Exportar
-                </a>
-              </div>  
-              <div class="col">
-                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_child_product' %}">
-                  <i class="fas fa-file-import"></i> Importar
-                </a>
-              </div>
-            </div>
-          </div>
-          <!-- /.card-body -->
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="card" >
-          <div class="card-header">
-            <h3 class="card-title">
-              <i class="fas fa-file-excel"></i>
+=======
               EXPORTAR E IMPORTAR JORNADA DE VACUNACIONES
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
             </h3>
           </div>
           <div class="card-body" id="data">    
             <div class="row">
               <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_product' %}" rel="export-client">
+=======
                 <a class="btn btn-app bg-info" href="{% url 'usersys:exp_vaccineday' %}" rel="export-client">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
                   <i class="fas fa-file-export"></i> Exportar
                 </a>
               </div>  
               <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_product' %}">
+=======
                 <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_vaccineday' %}">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+<<<<<<< HEAD
+              EXPORTAR E IMPORTAR CHILD PRODUCTOS
+=======
+              EXPORTAR E IMPORTAR DETALLE DE JORNADA DE VACUNACIONES
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_child_product' %}" rel="export-client">
+=======
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_det_vaccineday' %}" rel="export-client">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_child_product' %}">
+=======
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_det_vaccineday' %}">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+                  <i class="fas fa-file-import"></i> Importar
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="card" >
+          <div class="card-header">
+            <h3 class="card-title">
+              <i class="fas fa-file-excel"></i>
+<<<<<<< HEAD
+              EXPORTAR E IMPORTAR JORNADA DE VACUNACIONES
+=======
+              EXPORTAR E IMPORTAR PRODUCTOS
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+            </h3>
+          </div>
+          <div class="card-body" id="data">    
+            <div class="row">
+              <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_vaccineday' %}" rel="export-client">
+=======
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_product' %}" rel="export-client">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
+                  <i class="fas fa-file-export"></i> Exportar
+                </a>
+              </div>  
+              <div class="col">
+<<<<<<< HEAD
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_vaccineday' %}">
+=======
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_product' %}">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
                   <i class="fas fa-file-import"></i> Importar
                 </a>
               </div>
@@ -293,18 +336,30 @@
           <div class="card-header">
             <h3 class="card-title">
               <i class="fas fa-file-excel"></i>
+<<<<<<< HEAD
               EXPORTAR E IMPORTAR DETALLE DE JORNADA DE VACUNACIONES
+=======
+              EXPORTAR E IMPORTAR CHILD PRODUCTOS
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
             </h3>
           </div>
           <div class="card-body" id="data">    
             <div class="row">
               <div class="col">
+<<<<<<< HEAD
                 <a class="btn btn-app bg-info" href="{% url 'usersys:exp_det_vaccineday' %}" rel="export-client">
+=======
+                <a class="btn btn-app bg-info" href="{% url 'usersys:exp_child_product' %}" rel="export-client">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
                   <i class="fas fa-file-export"></i> Exportar
                 </a>
               </div>  
               <div class="col">
+<<<<<<< HEAD
                 <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_det_vaccineday' %}">
+=======
+                <a class="btn btn-app bg-lightblue" href="{% url 'usersys:imp_child_product' %}">
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
                   <i class="fas fa-file-import"></i> Importar
                 </a>
               </div>
@@ -314,8 +369,11 @@
         </div>
       </div>
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
       <div class="col">
         <div class="card" >
           <div class="card-header">

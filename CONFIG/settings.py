@@ -13,6 +13,10 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 import os
 import CONFIG.db as db
 from decouple import config
+<<<<<<< HEAD
+=======
+import dj_database_url
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,9 +26,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = config('SECRET_KEY', default='*=$38irmw#3rbre^#wyqhj-cnodnm^57s595m53l&e*mm9$gsn')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DJANGO_DEBUG', default=True, cast=bool)
+=======
+SECRET_KEY = config('SECRET_KEY')
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = config('DEBUG', default=False, cast=bool)
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
 ALLOWED_HOSTS = ['*']
 
@@ -62,6 +73,9 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
 ROOT_URLCONF = 'CONFIG.urls'
 
 TEMPLATES = [
@@ -87,11 +101,19 @@ WSGI_APPLICATION = 'CONFIG.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+<<<<<<< HEAD
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
+=======
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL')
+    )
+}
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 
 if config('DJANGO_PRODUCTION', default=False, cast=bool):
     from .settings_production import *
@@ -133,16 +155,26 @@ USE_TZ = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
 STATIC_URL = '/static/'
+<<<<<<< HEAD
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
+=======
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR , "static")
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
 LOGIN_URL = '/auth/login/' 
 
 MEDIA_URL = '/media/'
+<<<<<<< HEAD
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
@@ -153,3 +185,12 @@ EMAIL_HOST_PASSWORD = 'LegoEmail.'
 
 STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
 
+=======
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+
+EMAIL_HOST = config('EMAIL_HOST', default='localhost')
+EMAIL_PORT = config('EMAIL_PORT', default=587, cast=int)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD', default='')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER', default='legoagroemail@gmail.com')
+>>>>>>> b0891a40af8565bd3fc0e1b635d55a867dbce1e5
